@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/gym-routine-tracker/static/css/main.9be166fe.css",
+    "main.js": "/gym-routine-tracker/static/js/main.5b3960c9.js",
+    "index.html": "/gym-routine-tracker/index.html",
+    "main.9be166fe.css.map": "/gym-routine-tracker/static/css/main.9be166fe.css.map",
+    "main.5b3960c9.js.map": "/gym-routine-tracker/static/js/main.5b3960c9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9be166fe.css",
+    "static/js/main.5b3960c9.js"
+  ]
+}
