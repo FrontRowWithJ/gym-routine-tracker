@@ -1,0 +1,239 @@
+:root {
+  --label-height: 2rem;
+  --divider-height: 90%;
+  --label-width: 16rem;
+}
+
+.card-container {
+  display: grid;
+  width: 100%;
+  grid-template-rows: 2fr 8fr;
+  background: #36454f;
+  color: #e0e8ef;
+  height: 100%;
+  position: absolute;
+  -webkit-transition: left 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+  -o-transition: left 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+  transition: left 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+.card-container:first-of-type::after {
+  content: "";
+  position: absolute;
+  width: 10%;
+  height: 100%;
+  left: -5%;
+  background: rgb(54, 69, 79);
+  background: linear-gradient(
+    -90deg,
+    rgba(54, 69, 79, 1) 0%,
+    rgb(46, 59, 67) 50%,
+    rgba(54, 69, 79, 1) 100%
+  );
+}
+
+.card-container:last-of-type::after {
+  content: "";
+  position: absolute;
+  width: 10%;
+  height: 100%;
+  right: -5%;
+  background: rgb(54, 69, 79);
+  background: linear-gradient(
+    -90deg,
+    rgba(54, 69, 79, 1) 0%,
+    rgb(46, 59, 67) 50%,
+    rgba(54, 69, 79, 1) 100%
+  );
+}
+
+header {
+  grid-row: 1 / 2;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: xx-large;
+}
+
+section {
+  grid-row: 2 / 3;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.muscle-group-container {
+  position: absolute;
+  width: 100%;
+  height: 75%;
+  top: 12.5%;
+  overflow-y: scroll;
+}
+
+.scroller {
+  width: 100%;
+}
+
+.workout-row {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  height: 9rem;
+}
+
+.set-info {
+  position: absolute;
+  width: 40%;
+  height: 200%;
+  z-index: 3;
+  background: rgb(245, 222, 179);
+  background: radial-gradient(
+    circle,
+    rgba(245, 222, 179, 1) 0%,
+    rgba(238, 198, 123, 1) 100%
+  );
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.7s cubic-bezier(0.83, 0, 0.17, 1);
+  border-radius: 1rem;
+}
+
+.set-info .triangle {
+  position: absolute;
+  width: 100%;
+  height: 33.33333%;
+  bottom: 99%;
+  clip-path: polygon(50% 0%, 33.33333% 100%, 66.66666% 100%);
+  background: rgb(245, 222, 179);
+  background: radial-gradient(
+    circle,
+    rgba(245, 222, 179, 1) 0%,
+    rgba(238, 198, 123, 1) 100%
+  );
+}
+
+.workout-label {
+  width: var(--label-width);
+  height: var(--label-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.1rem;
+  z-index: 2;
+  position: relative;
+}
+
+.input-container {
+  width: 16rem;
+  height: 4rem;
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  border-radius: 2rem;
+  align-items: center;
+  padding: 0 0.5rem;
+  border-radius: 50px;
+  background: #36454f;
+  background: linear-gradient(145deg, #313e47, #3a4a55);
+  box-shadow: 20px 20px 60px #2e3b43, -20px -20px 60px #3e4f5b;
+}
+
+.input-container > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weight-label,
+.decrease-button,
+.increase-button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+}
+
+.decrease-button,
+.increase-button {
+  cursor: pointer;
+  font-size: 2rem;
+  background-color: #3e4f5b;
+  background: rgb(46, 59, 67);
+  background: linear-gradient(
+    -90deg,
+    rgba(46, 59, 67, 1) 0%,
+    rgba(62, 79, 91, 1) 100%
+  );
+}
+
+.decrease-button {
+  background: linear-gradient(
+    90deg,
+    rgba(46, 59, 67, 1) 0%,
+    rgba(62, 79, 91, 1) 100%
+  );
+}
+
+.save-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  height: 3rem;
+  width: 6rem;
+  border-radius: 1rem;
+  border: 0.5px solid white;
+  font-size: 1.3rem;
+
+  position: absolute;
+  z-index: 1;
+  bottom: 1rem;
+  background: #f2a25f;
+  background: linear-gradient(
+    300deg,
+    #f2a25f 0%,
+    #e66386 27%,
+    #e15cc2 62%,
+    #6169e3 100%
+  );
+}
+
+.save-button:active {
+  background: #ed7e21;
+  background: linear-gradient(
+    300deg,
+    #ed7e21 0%,
+    #dd2a5a 27%,
+    #d627ad 62%,
+    #2a35d9 100%
+  );
+}
+
+.save-indicator {
+  width: 6rem;
+  height: 3rem;
+  position: absolute;
+  bottom: 1rem;
+  z-index: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all ease-in-out 0.5s;
+  opacity: 0;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}

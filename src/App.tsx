@@ -1,26 +1,119 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useRef, useState } from "react";
+import Card from "./Card";
+import workout, { muscleGroups } from "./workoutData";
+import { db_url, times, translate, getLeft } from "./util";
+import "./app.css";
 
-function App() {
+const App = () => {
+  const [chestData, setChestData] = useState<number[]>();
+  const [backData, setBackData] = useState<number[]>();
+  const [shoulderData, setShoulderData] = useState<number[]>();
+  const [legData, setLegData] = useState<number[]>();
+  const [armsData, setArmsData] = useState<number[]>();
+  const appRef = useRef<HTMLDivElement>(null);
+  const cardRefs = times(muscleGroups.length, React.createRef<HTMLDivElement>);
+  const [start, setStart] = useState<{ x: number; y: number; t: number }>();
+  const [delta, setDelta] = useState<{ x: number; y: number }>();
+  const [curr, setCurr] = useState<number>(0);
+  const [isScrolling, setScrolling] = useState<boolean>();
+
+  const startSwipe = ({ pageX, pageY }: React.PointerEvent) =>
+    setStart({ x: pageX, y: pageY, t: +new Date() });
+
+  const moveSwipe = ({ pageX, pageY }: React.PointerEvent) => {
+    if (!start) return;
+    const d = { x: pageX - start.x, y: pageY - start.y };
+    setDelta(d);
+    const [l, m, r] = [-1, 0, 1].map((i) => cardRefs[curr + i]?.current);
+    if (appRef.current) {
+      const w = appRef.current.clientWidth;
+      if (isScrolling === undefined)
+        setScrolling(!!(isScrolling || Math.abs(d.x) < Math.abs(d.y)));
+      if (!isScrolling) {
+        cardRefs.forEach(
+          (ref) => ref.current && (ref.current.style.transitionDuration = "0ms")
+        );
+        [l, m, r].forEach((e, i) => e && translate(e, [-w, 0, w][i] + d.x));
+      }
+    }
+  };
+
+  const endSwipe = () => {
+    if (!start) return;
+    if (!delta) {
+      setStart(undefined);
+      setScrolling(undefined);
+      return;
+    }
+    cardRefs.forEach(
+      (ref) => ref.current && (ref.current.style.transitionDuration = "")
+    );
+    if (appRef.current && delta) {
+      const w = appRef.current.clientWidth;
+      const duration = +new Date() - start.t;
+      const absX = Math.abs(delta.x);
+      const isValidSwipe = (duration < 250 && absX > 20) || absX > w / 2;
+      const l = curr ? cardRefs[curr - 1].current : undefined;
+      const m = cardRefs[curr].current;
+      const r = curr !== 4 ? cardRefs[curr + 1].current : undefined;
+      if (!isScrolling) {
+        if (isValidSwipe) {
+          const direction = absX / delta.x;
+          const pos =
+            direction < 0
+              ? [2 * -w, +(curr !== 4) * -w, 0]
+              : [0, +(curr !== 0) * w, 2 * w];
+          [l, m, r].forEach((e, i) => e && translate(e, pos[i]));
+          const newCurr =
+            direction < 0 ? (r ? curr + 1 : curr) : l ? curr - 1 : curr;
+          setCurr(newCurr);
+        } else [l, m, r].forEach((e, i) => e && translate(e, [-w, 0, w][i]));
+      }
+      setDelta(undefined);
+      setStart(undefined);
+      setScrolling(undefined);
+    }
+  };
+
+  useEffect(() => {
+    (async () => {
+      const result = await (await fetch(db_url)).json();
+      setChestData(result["chest"]);
+      setBackData(result["back"]);
+      setShoulderData(result["shoulder"]);
+      setLegData(result["leg"]);
+      setArmsData(result["arms"]);
+    })();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      ref={appRef}
+      className="app"
+      onPointerDown={startSwipe}
+      onPointerMove={moveSwipe}
+      onPointerUp={endSwipe}
+    >
+      {muscleGroups.map((muscleGroup, i) => (
+        <Card
+          cardRef={cardRefs[i]}
+          style={{ left: getLeft(i, curr) }}
+          key={muscleGroup}
+          muscleGroup={muscleGroup}
+          routine={workout[muscleGroup]}
+          data={[chestData, backData, shoulderData, legData, armsData][i]}
+          setData={
+            [
+              setChestData,
+              setBackData,
+              setShoulderData,
+              setLegData,
+              setArmsData,
+            ][i]
+          }
+        />
+      ))}
     </div>
   );
-}
-
+};
 export default App;
