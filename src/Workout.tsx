@@ -26,7 +26,7 @@ const Workout = ({
       <div
         className="workout-label"
         style={{ cursor: canPress ? "pointer" : "not-allowed" }}
-        onPointerDown={() => {
+        onClick={() => {
           if (canPress) {
             setPress(false);
             setOpacity(1);
