@@ -1,8 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import Card from "./Card";
 import workout, { muscleGroups } from "./workoutData";
-import { db_url, times, translate, getLeft } from "./util";
+import { backend_uri, times, translate, getLeft } from "./util";
 import "./app.css";
+
+type TouchEvent = React.TouchEvent<HTMLDivElement>;
+type MouseEvent = React.MouseEvent<HTMLDivElement>;
+type Event = TouchEvent | MouseEvent;
+
+const isTouchEvent = (event: Event) => !/[Mm]ouse/i.test(event.type);
+
+const getEvent = (event: Event) =>
+  isTouchEvent(event)
+    ? (event as TouchEvent).touches[0]
+    : (event as MouseEvent);
+
+const isPinching = (event: TouchEvent) => event.touches.length > 1;
 
 const App = () => {
   const [chestData, setChestData] = useState<number[]>();
@@ -17,11 +30,15 @@ const App = () => {
   const [curr, setCurr] = useState<number>(0);
   const [isScrolling, setScrolling] = useState<boolean>();
 
-  const startSwipe = ({ pageX, pageY }: React.PointerEvent) =>
+  const startSwipe = (evt: Event) => {
+    const { pageX, pageY } = getEvent(evt);
     setStart({ x: pageX, y: pageY, t: +new Date() });
+  };
 
-  const moveSwipe = ({ pageX, pageY }: React.PointerEvent) => {
+  const moveSwipe = (evt: Event) => {
     if (!start) return;
+    if (isTouchEvent(evt) && isPinching(evt as TouchEvent)) return;
+    const { pageX, pageY } = getEvent(evt);
     const d = { x: pageX - start.x, y: pageY - start.y };
     setDelta(d);
     const [l, m, r] = [-1, 0, 1].map((i) => cardRefs[curr + i]?.current);
@@ -77,7 +94,7 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await (await fetch(db_url)).json();
+      const result = await (await fetch(backend_uri)).json();
       setChestData(result["chest"]);
       setBackData(result["back"]);
       setShoulderData(result["shoulder"]);
@@ -85,14 +102,28 @@ const App = () => {
       setArmsData(result["arms"]);
     })();
   }, []);
-
+  const dataArr = [chestData, backData, shoulderData, legData, armsData];
+  const setDataArr = [
+    setChestData,
+    setBackData,
+    setShoulderData,
+    setLegData,
+    setArmsData,
+  ];
   return (
     <div
       ref={appRef}
       className="app"
-      onPointerDown={startSwipe}
-      onPointerMove={moveSwipe}
-      onPointerUp={endSwipe}
+      onMouseDown={startSwipe}
+      onMouseMove={moveSwipe}
+      onMouseUp={endSwipe}
+      onTouchStart={startSwipe}
+      onTouchMove={moveSwipe}
+      onTouchEnd={endSwipe}
+      onContextMenu={(evt) => {
+        // evt.stopPropagation();
+        // evt.preventDefault();
+      }}
     >
       {muscleGroups.map((muscleGroup, i) => (
         <Card
@@ -101,16 +132,8 @@ const App = () => {
           key={muscleGroup}
           muscleGroup={muscleGroup}
           routine={workout[muscleGroup]}
-          data={[chestData, backData, shoulderData, legData, armsData][i]}
-          setData={
-            [
-              setChestData,
-              setBackData,
-              setShoulderData,
-              setLegData,
-              setArmsData,
-            ][i]
-          }
+          data={dataArr[i]}
+          setData={setDataArr[i]}
         />
       ))}
     </div>
