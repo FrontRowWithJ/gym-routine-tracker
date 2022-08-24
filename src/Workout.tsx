@@ -5,7 +5,7 @@ interface WorkoutProps {
   workoutName: string;
   numOfSets: number;
   numOfReps: number;
-  level: number;
+  level: number | undefined;
   increase: () => void;
   decrease: () => void;
 }
@@ -50,14 +50,13 @@ const Workout = ({
       {
         <div className="input-container">
           <div
-            onContextMenu={(e) => e.preventDefault()}
             draggable={false}
             onPointerDown={() => increase()}
             className="increase-button"
           >
             +
           </div>
-          <div className="weight-label">{level}</div>
+          {level && <div className="weight-label">{level}</div>}
           <div onPointerDown={() => decrease()} className="decrease-button">
             -
           </div>
