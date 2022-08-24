@@ -29,6 +29,7 @@
 }
 
 .card-container:last-of-type::after {
+  left: unset;
   right: -5%;
 }
 
