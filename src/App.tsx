@@ -121,8 +121,8 @@ const App = () => {
       onTouchMove={moveSwipe}
       onTouchEnd={endSwipe}
       onContextMenu={(evt) => {
-        // evt.stopPropagation();
-        // evt.preventDefault();
+        evt.stopPropagation();
+        evt.preventDefault();
       }}
     >
       {muscleGroups.map((muscleGroup, i) => (
