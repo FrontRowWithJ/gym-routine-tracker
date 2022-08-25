@@ -1,7 +1,6 @@
 import { IWorkout, muscleGroups } from "./workoutData";
 import "./card.css";
-import { backend_uri } from "./util";
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties } from "react";
 import Workout from "./Workout";
 import Label from "./Label";
 
@@ -22,7 +21,6 @@ const Card = ({
   style,
   cardRef,
 }: CardProp) => {
-  const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>();
   const mGroup = muscleGroup === "arms" ? "arm" : muscleGroup;
   const increase = (data: number[] | undefined, i: number) =>
     data && setData(data.map((n, _i) => (i === _i ? n + 1 : n)));
@@ -66,29 +64,6 @@ const Card = ({
               );
             })}
             <div style={{ height: "4.5rem" }}></div>
-          </div>
-        </div>
-        <div className="save-container">
-          <div
-            className="save-button noselect"
-            onPointerDown={() => {
-              fetch(`${backend_uri}?${new URLSearchParams({ muscleGroup })}`, {
-                method: "POST",
-                mode: "cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-              }).then(({ status }) => {
-                if (status === 200) {
-                  setIndicatorStyle({ opacity: 1, bottom: "4rem" });
-                  setTimeout(() => setIndicatorStyle({}), 1000);
-                }
-              });
-            }}
-          >
-            save
-          </div>
-          <div className="save-indicator" style={indicatorStyle}>
-            Saved!
           </div>
         </div>
       </section>
