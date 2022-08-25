@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, CSSProperties } from "react";
 import Card from "./Card";
 import workout, { muscleGroups } from "./workoutData";
 import { backend_uri, times, translate, getLeft } from "./util";
@@ -8,14 +8,14 @@ type TouchEvent = React.TouchEvent<HTMLDivElement>;
 type MouseEvent = React.MouseEvent<HTMLDivElement>;
 type Event = TouchEvent | MouseEvent;
 
-const isTouchEvent = (event: Event) => !/[Mm]ouse/i.test(event.type);
+const isTouchEvent = ({ type }: Event) => !/[Mm]ouse/i.test(type);
 
 const getEvent = (event: Event) =>
   isTouchEvent(event)
     ? (event as TouchEvent).touches[0]
     : (event as MouseEvent);
 
-const isPinching = (event: TouchEvent) => event.touches.length > 1;
+const isPinching = ({ touches: { length } }: TouchEvent) => length > 1;
 
 const App = () => {
   const [chestData, setChestData] = useState<number[]>();
@@ -29,6 +29,7 @@ const App = () => {
   const [delta, setDelta] = useState<{ x: number; y: number }>();
   const [curr, setCurr] = useState<number>(0);
   const [isScrolling, setScrolling] = useState<boolean>();
+  const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>();
 
   const startSwipe = (evt: Event) => {
     const { pageX, pageY } = getEvent(evt);
@@ -50,7 +51,12 @@ const App = () => {
         cardRefs.forEach(
           (ref) => ref.current && (ref.current.style.transitionDuration = "0ms")
         );
-        [l, m, r].forEach((e, i) => e && translate(e, [-w, 0, w][i] + d.x));
+        [l, m, r].forEach((e, i) => {
+          const onEdge =
+            (curr === muscleGroups.length - 1 && d.x < 0) ||
+            (curr === 0 && d.x > 0);
+          e && translate(e, [-w, 0, w][i] + d.x / (onEdge ? 10 : 1));
+        });
       }
     }
   };
@@ -136,6 +142,34 @@ const App = () => {
           setData={setDataArr[i]}
         />
       ))}
+      <div className="save-container">
+        <div
+          className="save-button noselect"
+          onPointerDown={() => {
+            fetch(
+              `${backend_uri}?${new URLSearchParams({
+                muscleGroup: muscleGroups[curr],
+              })}`,
+              {
+                method: "POST",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dataArr[curr]),
+              }
+            ).then(({ status }) => {
+              if (status === 200) {
+                setIndicatorStyle({ opacity: 1, bottom: "4rem" });
+                setTimeout(() => setIndicatorStyle({}), 1000);
+              }
+            });
+          }}
+        >
+          save
+        </div>
+        <div className="save-indicator" style={indicatorStyle}>
+          Saved!
+        </div>
+      </div>
     </div>
   );
 };
