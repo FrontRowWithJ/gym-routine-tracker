@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState, CSSProperties } from "react";
 import Card from "./Card";
 import workout, { muscleGroups } from "./workoutData";
-import { backend_uri, times, translate, getLeft } from "./util";
+import {
+  times,
+  translate,
+  getLeft,
+  getGymDataURL,
+  updateGymDataURL,
+} from "./util";
 import "./app.css";
 
 type TouchEvent = React.TouchEvent<HTMLDivElement>;
@@ -100,7 +106,7 @@ const App = () => {
 
   useEffect(() => {
     (async () => {
-      const result = await (await fetch(backend_uri)).json();
+      const result = await (await fetch(getGymDataURL)).json();
       setChestData(result["chest"]);
       setBackData(result["back"]);
       setShoulderData(result["shoulder"]);
@@ -147,7 +153,7 @@ const App = () => {
           className="save-button noselect"
           onPointerDown={() => {
             fetch(
-              `${backend_uri}?${new URLSearchParams({
+              `${updateGymDataURL}?${new URLSearchParams({
                 muscleGroup: muscleGroups[curr],
               })}`,
               {
