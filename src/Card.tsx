@@ -7,10 +7,11 @@ import Label from "./Label";
 interface CardProp {
   routine: readonly IWorkout[];
   muscleGroup: typeof muscleGroups[number];
-  data: number[] | undefined;
-  setData: React.Dispatch<React.SetStateAction<number[] | undefined>>;
+  data: number[];
+  setData: (arr: number[]) => void;
   style?: CSSProperties;
   cardRef: React.RefObject<HTMLDivElement>;
+  updateExcersizeData: (index: number, val: number) => void;
 }
 
 const Card = ({
@@ -20,12 +21,13 @@ const Card = ({
   setData,
   style,
   cardRef,
+  updateExcersizeData,
 }: CardProp) => {
   const mGroup = muscleGroup === "arms" ? "arm" : muscleGroup;
-  const increase = (data: number[] | undefined, i: number) =>
-    data && setData(data.map((n, _i) => (i === _i ? n + 1 : n)));
-  const decrease = (data: number[] | undefined, i: number) =>
-    data && data[i] > 0 && setData(data.map((n, _i) => (i === _i ? n - 1 : n)));
+  const increase = (data: number[], i: number) =>
+    setData(data.map((n, _i) => (i === _i ? n + 1 : n)));
+  const decrease = (data: number[], i: number) =>
+    setData(data.map((n, _i) => (i === _i ? n - 1 : n)));
   return (
     <div ref={cardRef} className="card-container noselect" style={style}>
       <header className="noselect">{mGroup}</header>
@@ -35,30 +37,34 @@ const Card = ({
             {routine.map(({ workoutName, numOfSets, numOfReps }, i) => {
               return (
                 <React.Fragment key={`${i}${muscleGroup}${workoutName}`}>
-                  {i === 0 && (
-                    <Label
-                      pos={0}
-                      bar={
-                        ["⎯⎯⎯", "⎯⎯⎯⎯", "⎯⎯⎯", "⎯⎯⎯⎯", "⎯⎯⎯⎯"][
-                          muscleGroups.indexOf(muscleGroup)
-                        ]
-                      }
-                      text={`${mGroup} Excersizes`}
-                    />
-                  )}
+                  {i === 0 && <Label pos={0} text={`${mGroup} Excersizes`} />}
                   {i === routine.length - 4 && (
-                    <Label pos={1} bar="⎯⎯⎯⎯" text="Ab exercises" />
+                    <Label pos={1} text="Ab exercises" />
                   )}
-                  {i === routine.length - 1 && (
-                    <Label pos={2} bar="⎯⎯⎯⎯⎯⎯" text="Cardio" />
-                  )}
+                  {i === routine.length - 1 && <Label pos={2} text="Cardio" />}
                   <Workout
                     workoutName={workoutName}
                     numOfSets={numOfSets}
                     numOfReps={numOfReps}
                     level={data && data[i]}
-                    increase={() => increase(data, i)}
-                    decrease={() => decrease(data, i)}
+                    increase={() => {
+                      if (data) {
+                        let offset = 1;
+                        while (offset < 5 && i !== data.length - offset++)
+                          if (i !== data.length - offset)
+                            updateExcersizeData(4, -1);
+                          else increase(data, i);
+                      }
+                    }}
+                    decrease={() => {
+                      if (data) {
+                        let offset = 1;
+                        while (offset < 5 && i !== data.length - offset++);
+                        if (i !== data.length - offset)
+                          updateExcersizeData(4, -1);
+                        else decrease(data, i);
+                      }
+                    }}
                   />
                 </React.Fragment>
               );
