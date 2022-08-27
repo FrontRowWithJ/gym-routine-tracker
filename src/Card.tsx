@@ -23,21 +23,27 @@ const Card = ({
   cardRef,
   updateExcersizeData,
 }: CardProp) => {
-  const mGroup = muscleGroup === "arms" ? "arm" : muscleGroup;
-  const increase = (data: number[], i: number) =>
-    setData(data.map((n, _i) => (i === _i ? n + 1 : n)));
-  const decrease = (data: number[], i: number) =>
-    setData(data.map((n, _i) => (i === _i ? n - 1 : n)));
+  const setWorkoutValues = (i: number, val: number) => {
+    if (data) {
+      let offset = 0;
+      while (++offset < 5 && i !== data.length - offset);
+      if (i === data.length - offset) updateExcersizeData(offset, val);
+      else setData(data.map((n, _i) => (i === _i ? n + val : n)));
+    }
+  };
+
   return (
     <div ref={cardRef} className="card-container noselect" style={style}>
-      <header className="noselect">{mGroup}</header>
+      <header className="noselect">{muscleGroup}</header>
       <section>
         <div className="muscle-group-container">
           <div className="scroller">
             {routine.map(({ workoutName, numOfSets, numOfReps }, i) => {
               return (
                 <React.Fragment key={`${i}${muscleGroup}${workoutName}`}>
-                  {i === 0 && <Label pos={0} text={`${mGroup} Excersizes`} />}
+                  {i === 0 && (
+                    <Label pos={0} text={`${muscleGroup} Excersizes`} />
+                  )}
                   {i === routine.length - 4 && (
                     <Label pos={1} text="Ab exercises" />
                   )}
@@ -47,24 +53,8 @@ const Card = ({
                     numOfSets={numOfSets}
                     numOfReps={numOfReps}
                     level={data && data[i]}
-                    increase={() => {
-                      if (data) {
-                        let offset = 1;
-                        while (offset < 5 && i !== data.length - offset++)
-                          if (i !== data.length - offset)
-                            updateExcersizeData(4, -1);
-                          else increase(data, i);
-                      }
-                    }}
-                    decrease={() => {
-                      if (data) {
-                        let offset = 1;
-                        while (offset < 5 && i !== data.length - offset++);
-                        if (i !== data.length - offset)
-                          updateExcersizeData(4, -1);
-                        else decrease(data, i);
-                      }
-                    }}
+                    increase={() => setWorkoutValues(i, 1)}
+                    decrease={() => setWorkoutValues(i, -1)}
                   />
                 </React.Fragment>
               );
