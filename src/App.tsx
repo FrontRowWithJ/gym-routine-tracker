@@ -120,7 +120,7 @@ const App = () => {
       setBackData(result["back"]);
       setShoulderData(result["shoulder"]);
       setLegData(result["leg"]);
-      setArmsData(result["arms"]);
+      setArmsData(result["arm"]);
     })();
   }, []);
 
