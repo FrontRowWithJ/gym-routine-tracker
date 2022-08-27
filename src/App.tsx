@@ -23,12 +23,21 @@ const getEvent = (event: Event) =>
 
 const isPinching = ({ touches: { length } }: TouchEvent) => length > 1;
 
+const useData: () => [number[], (arr: number[]) => void] = () => {
+  const [arr, set] = useState<number[]>([]);
+  const setArr = (arr: number[]) => {
+    arr.forEach((n, i) => n === -1 && (arr[i] = 0));
+    set(arr);
+  };
+  return [arr, setArr];
+};
+
 const App = () => {
-  const [chestData, setChestData] = useState<number[]>();
-  const [backData, setBackData] = useState<number[]>();
-  const [shoulderData, setShoulderData] = useState<number[]>();
-  const [legData, setLegData] = useState<number[]>();
-  const [armsData, setArmsData] = useState<number[]>();
+  const [chestData, setChestData] = useData();
+  const [backData, setBackData] = useData();
+  const [shoulderData, setShoulderData] = useData();
+  const [legData, setLegData] = useData();
+  const [armsData, setArmsData] = useData();
   const appRef = useRef<HTMLDivElement>(null);
   const cardRefs = times(muscleGroups.length, React.createRef<HTMLDivElement>);
   const [start, setStart] = useState<{ x: number; y: number; t: number }>();
@@ -114,6 +123,7 @@ const App = () => {
       setArmsData(result["arms"]);
     })();
   }, []);
+
   const dataArr = [chestData, backData, shoulderData, legData, armsData];
   const setDataArr = [
     setChestData,
@@ -122,6 +132,14 @@ const App = () => {
     setLegData,
     setArmsData,
   ];
+  const updateExcersizeData = (offset: number, val: number) => {
+    dataArr.forEach((arr, i) =>
+      setDataArr[i](
+        arr.map((n, j) => (j === arr.length - offset ? n + val : n))
+      )
+    );
+  };
+
   return (
     <div
       ref={appRef}
@@ -146,23 +164,19 @@ const App = () => {
           routine={workout[muscleGroup]}
           data={dataArr[i]}
           setData={setDataArr[i]}
+          updateExcersizeData={updateExcersizeData}
         />
       ))}
       <div className="save-container">
         <div
           className="save-button noselect"
           onPointerDown={() => {
-            fetch(
-              `${updateGymDataURL}?${new URLSearchParams({
-                muscleGroup: muscleGroups[curr],
-              })}`,
-              {
-                method: "POST",
-                mode: "cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dataArr[curr]),
-              }
-            ).then(({ status }) => {
+            fetch(`${updateGymDataURL}?muscleGroup=${muscleGroups[curr]}`, {
+              method: "POST",
+              mode: "cors",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dataArr[curr]),
+            }).then(({ status }) => {
               if (status === 200) {
                 setIndicatorStyle({ opacity: 1, bottom: "4rem" });
                 setTimeout(() => setIndicatorStyle({}), 1000);
