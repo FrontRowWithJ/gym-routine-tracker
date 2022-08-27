@@ -15,7 +15,7 @@ export const muscleGroups = [
   "back",
   "shoulder",
   "leg",
-  "arms",
+  "arm",
 ] as const;
 export type IRoutine = {
   [key in typeof muscleGroups[number]]: IWorkout[];
@@ -70,7 +70,7 @@ const workout: IRoutine = {
     ...ABS,
     { workoutName: "15 min run", numOfSets: 1, numOfReps: 1 },
   ],
-  arms: [
+  arm: [
     { workoutName: "Dumbell Curls", numOfSets: 3, numOfReps: 10 },
     { workoutName: "Dumbell Skull Crushers", numOfSets: 3, numOfReps: 10 },
     { workoutName: "Rope Cable Curl", numOfSets: 3, numOfReps: 10 },
