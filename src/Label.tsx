@@ -1,8 +1,14 @@
 import "./label.css";
 
-type LabelProp = { bar: string; text: string; pos: number };
-const Label = ({ bar, text, pos }: LabelProp) => (
-  <div className={`label-${pos}`}>{`${bar} ${text} ${bar}`}</div>
+type LabelProp = { text: string; pos: number };
+const Label = ({ text, pos }: LabelProp) => (
+  <div className={`label-${pos} center`}>
+    <div className="line"></div>
+    <div className="text center">
+      <span className="hidden-text">{`${text}`}</span>
+      <span className="shown-text center">{`${text}`}</span>
+    </div>
+  </div>
 );
 
 export default Label;
