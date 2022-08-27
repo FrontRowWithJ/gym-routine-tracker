@@ -2,7 +2,7 @@ const ABS = [
   { workoutName: "25s Plank", numOfSets: 2, numOfReps: 1 },
   { workoutName: "Laying Down Leg Raises", numOfSets: 2, numOfReps: 15 },
   { workoutName: "Bicycle crunch", numOfSets: 2, numOfReps: 21 },
-];
+] as const;
 
 export interface IWorkout {
   workoutName: string;
