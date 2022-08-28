@@ -1,0 +1,63 @@
+:root {
+  --width: 90vw;
+}
+
+[class^="label"] {
+  font-size: 1.3rem;
+  font-style: italic;
+  font-weight: 900;
+  background-clip: text !important;
+  color: transparent !important;
+  text-transform: capitalize;
+  position: relative;
+  flex-direction: row;
+  z-index: 2;
+  height: 2rem;
+}
+
+.label-0,
+.label-0 :where(.shown-text, .line) {
+  background: linear-gradient(135deg, #ffa500 33.33%, yellow 66.66%);
+}
+
+.label-1,
+.label-1 :where(.shown-text, .line) {
+  background: linear-gradient(135deg, #227e22 33.33%, #66ff00 66.66%);
+}
+
+.label-2,
+.label-2 :where(.shown-text, .line) {
+  background: linear-gradient(135deg, #f83600 33.33%, #ee812b 66.66%);
+}
+
+.text {
+  position: absolute;
+  background: linear-gradient(
+    #36454f 0%,
+    #36454f 55%,
+    transparent 55%,
+    transparent 100%
+  );
+}
+
+.text .shown-text {
+  position: absolute;
+  background-clip: text !important;
+  width: var(--width);
+}
+
+[class^="label"] .line {
+  height: 2px;
+  width: var(--width);
+}
+
+[class^="label"] .text .hidden-text {
+  color: transparent;
+  margin: 0 0.5rem;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
