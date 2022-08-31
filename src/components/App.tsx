@@ -38,6 +38,7 @@ const App = () => {
   const [shoulderData, setShoulderData] = useData();
   const [legData, setLegData] = useData();
   const [armsData, setArmsData] = useData();
+  const [cardioAndAbsData, setCardioAndAbsData] = useData();
   const appRef = useRef<HTMLDivElement>(null);
   const cardRefs = times(muscleGroups.length, React.createRef<HTMLDivElement>);
   const [start, setStart] = useState<{ x: number; y: number; t: number }>();
@@ -47,6 +48,7 @@ const App = () => {
   const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>();
   const [borderPos, setStyle] = useState("0");
   const [canPress, setPress] = useState(true);
+  
   const startSwipe = (evt: Event) => {
     const { pageX, pageY } = getEvent(evt);
     setStart({ x: pageX, y: pageY, t: +new Date() });
@@ -122,6 +124,7 @@ const App = () => {
       setShoulderData(result["shoulder"]);
       setLegData(result["leg"]);
       setArmsData(result["arm"]);
+      setCardioAndAbsData(result["cardioAndAbs"]);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -134,13 +137,6 @@ const App = () => {
     setLegData,
     setArmsData,
   ];
-  const updateExcersizeData = (offset: number, val: number) => {
-    dataArr.forEach((arr, i) =>
-      setDataArr[i](
-        arr.map((n, j) => (j === arr.length - offset ? n + val : n))
-      )
-    );
-  };
 
   return (
     <div
@@ -162,7 +158,7 @@ const App = () => {
           cardRef={cardRefs[i]}
           style={{ left: getLeft(i, curr) }}
           key={muscleGroup}
-          {...{ muscleGroup, updateExcersizeData }}
+          {...{ muscleGroup, cardioAndAbsData, setCardioAndAbsData }}
           routine={workout[muscleGroup]}
           data={dataArr[i]}
           setData={setDataArr[i]}
@@ -194,6 +190,8 @@ const App = () => {
           S&nbsp;&nbsp;A&nbsp;&nbsp;V&nbsp;&nbsp;E
           <div id="top-border" style={{ top: borderPos }}></div>
           <div id="bottom-border" style={{ bottom: borderPos }}></div>
+          <div id="left-border"></div>
+          <div id="right-border"></div>
         </div>
         <div className="save-indicator" style={indicatorStyle}>
           Saved!
