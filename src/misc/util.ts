@@ -1,7 +1,12 @@
 type Callback<T> = (value: number) => T;
+type Value<T> = T;
+type CB<T> = Callback<T> | Value<T>;
 
-export const times = <T>(n: number, iter: Callback<T>) =>
-  [...new Array(n).keys()].map<T>(iter);
+export const times = <T>(n: number, iter: CB<T>) => {
+  if (typeof iter === "function")
+    return [...new Array(n).keys()].map<T>(iter as Callback<T>);
+  else return [...new Array(n).keys()].map<typeof iter>(() => iter);
+};
 
 // const baseURL = "http://localhost:8888"
 const baseURL = "https://gym-tracker-db.netlify.app";
