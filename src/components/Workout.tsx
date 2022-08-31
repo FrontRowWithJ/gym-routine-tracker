@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import "../style/workout.css";
 
 interface WorkoutProps {
@@ -8,7 +8,11 @@ interface WorkoutProps {
   level: number | undefined;
   increase: () => void;
   decrease: () => void;
+  unit: string;
 }
+
+const SHOW_STYLE: CSSProperties = { opacity: 1, top: "0" };
+const HIDE_STYLE: CSSProperties = { opacity: 0, top: "100%" };
 
 const Workout = ({
   workoutName,
@@ -17,51 +21,61 @@ const Workout = ({
   level,
   increase,
   decrease,
+  unit,
 }: WorkoutProps) => {
+  const isDataReady = level !== undefined;
+  const [style, setStyle] = useState<CSSProperties>(HIDE_STYLE);
   const [canPress, setPress] = useState<boolean>(true);
-  const [opacity, setOpacity] = useState<number>(0);
-  const [top, setTop] = useState<string>("-100%");
   return (
     <div className="workout-row">
+      <div className="workout-label">{workoutName}</div>
       <div
-        className="workout-label"
-        style={{ cursor: canPress ? "pointer" : "not-allowed" }}
-        onClick={() => {
-          if (canPress) {
-            setPress(false);
-            setOpacity(1);
-            setTop("133.333%");
-            setTimeout(() => {
-              setPress(true);
-              setOpacity(0);
-              setTop("-100%");
-            }, 1500);
-          }
-        }}
+        className="input-container"
+        style={!isDataReady ? { animation: "fading 1.5s infinite" } : {}}
       >
-        {workoutName}
-        <div className="set-info noselect" style={{ opacity, top }}>
-          Sets: {numOfSets}
-          <br />
-          Reps: {numOfReps}
-          <div className="triangle"></div>
+        <div
+          draggable={false}
+          onPointerDown={() => increase()}
+          className="increase-button"
+        >
+          +
+        </div>
+        <div
+          className="weight-label"
+          onPointerDown={() => {
+            if (canPress) {
+              setPress(false);
+              setStyle(SHOW_STYLE);
+              setTimeout(() => {
+                setStyle(HIDE_STYLE);
+                setPress(true);
+              }, 1500);
+            }
+          }}
+        >
+          {isDataReady && `${level} ${unit}`}
+        </div>
+        <div onPointerDown={() => decrease()} className="decrease-button">
+          -
+        </div>
+        <div
+          className="test"
+          style={style}
+          onPointerDown={() => {
+            if (!canPress) {
+              setStyle(HIDE_STYLE);
+              setPress(true);
+            }
+          }}
+        >
+          <div>
+            Sets: &nbsp;<span style={{ color: "#f2a25f" }}>{numOfSets}</span>
+          </div>
+          <div>
+            Reps:&nbsp;<span style={{ color: "#dd2a5a" }}>{numOfReps}</span>
+          </div>
         </div>
       </div>
-      {
-        <div className="input-container">
-          <div
-            draggable={false}
-            onPointerDown={() => increase()}
-            className="increase-button"
-          >
-            +
-          </div>
-          {level && <div className="weight-label">{level}</div>}
-          <div onPointerDown={() => decrease()} className="decrease-button">
-            -
-          </div>
-        </div>
-      }
     </div>
   );
 };

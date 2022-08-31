@@ -26,7 +26,7 @@ const isPinching = ({ touches: { length } }: TouchEvent) => length > 1;
 const useData: () => [number[], (arr: number[]) => void] = () => {
   const [arr, set] = useState<number[]>([]);
   const setArr = (arr: number[]) => {
-    arr.forEach((n, i) => n === -1 && (arr[i] = 0));
+    arr.forEach((n, i) => n < 0 && (arr[i] = 0));
     set(arr);
   };
   return [arr, setArr];
@@ -45,7 +45,8 @@ const App = () => {
   const [curr, setCurr] = useState<number>(0);
   const [isScrolling, setScrolling] = useState<boolean>();
   const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>();
-
+  const [borderPos, setStyle] = useState("0");
+  const [canPress, setPress] = useState(true);
   const startSwipe = (evt: Event) => {
     const { pageX, pageY } = getEvent(evt);
     setStart({ x: pageX, y: pageY, t: +new Date() });
@@ -122,7 +123,7 @@ const App = () => {
       setLegData(result["leg"]);
       setArmsData(result["arm"]);
     })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const dataArr = [chestData, backData, shoulderData, legData, armsData];
@@ -161,31 +162,38 @@ const App = () => {
           cardRef={cardRefs[i]}
           style={{ left: getLeft(i, curr) }}
           key={muscleGroup}
-          muscleGroup={muscleGroup}
+          {...{ muscleGroup, updateExcersizeData }}
           routine={workout[muscleGroup]}
           data={dataArr[i]}
           setData={setDataArr[i]}
-          updateExcersizeData={updateExcersizeData}
         />
       ))}
       <div className="save-container">
         <div
           className="save-button noselect"
           onPointerDown={() => {
-            fetch(`${updateGymDataURL}?muscleGroup=${muscleGroups[curr]}`, {
-              method: "POST",
-              mode: "cors",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(dataArr[curr]),
-            }).then(({ status }) => {
-              if (status === 200) {
-                setIndicatorStyle({ opacity: 1, bottom: "4rem" });
-                setTimeout(() => setIndicatorStyle({}), 1000);
-              }
-            });
+            if (canPress) {
+              setPress(false);
+              setStyle("calc(100% - 2px)");
+              setTimeout(() => setStyle("0"), 1500);
+              fetch(`${updateGymDataURL}?muscleGroup=${muscleGroups[curr]}`, {
+                method: "POST",
+                mode: "cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dataArr[curr]),
+              }).then(({ status }) => {
+                if (status === 200) {
+                  setPress(true);
+                  setIndicatorStyle({ opacity: 1, bottom: "4.5rem" });
+                  setTimeout(() => setIndicatorStyle({}), 1000);
+                }
+              });
+            }
           }}
         >
-          save
+          S&nbsp;&nbsp;A&nbsp;&nbsp;V&nbsp;&nbsp;E
+          <div id="top-border" style={{ top: borderPos }}></div>
+          <div id="bottom-border" style={{ bottom: borderPos }}></div>
         </div>
         <div className="save-indicator" style={indicatorStyle}>
           Saved!

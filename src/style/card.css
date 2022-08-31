@@ -18,19 +18,18 @@
 }
 
 .card-container:first-of-type::after,
-.card-container:last-of-type::after {
+.card-container:nth-of-type(5)::after {
   content: "";
   position: absolute;
-  width: 10%;
+  width: 100%;
   height: 100%;
-  background: #36454f;
-  background: linear-gradient(-90deg, #36454f 0, #2e3b43 50%, #36454f 100%);
-  left: -5%;
+  background: linear-gradient(to left, transparent, #2e3b43 5%);
+  right: 95%;
 }
 
-.card-container:last-of-type::after {
-  left: unset;
-  right: -5%;
+.card-container:nth-of-type(5)::after {
+  background: linear-gradient(to right, transparent, #2e3b43 5%);
+  left: 95%;
 }
 
 header {

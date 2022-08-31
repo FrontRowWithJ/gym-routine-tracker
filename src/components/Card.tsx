@@ -61,9 +61,9 @@ const Card = ({
           onScroll={({ currentTarget }) => {
             const { current: node } = scrollerRef;
             if (node) {
-              const { y: parentyY } = currentTarget.getBoundingClientRect();
+              const { y: parentY } = currentTarget.getBoundingClientRect();
               const arr = labelRefs.map(({ current: label }) =>
-                Math.abs(label ? label.getBoundingClientRect().y - parentyY : 0)
+                Math.abs((label?.getBoundingClientRect().y as number) - parentY)
               );
               const min = Math.min(...arr);
               const minIndex = arr.findIndex((n) => n === min);
@@ -74,7 +74,7 @@ const Card = ({
           }}
         >
           <div className="scroller" ref={scrollerRef}>
-            {routine.map(({ workoutName, numOfSets, numOfReps }, i) => {
+            {routine.map(({ workoutName, numOfSets, numOfReps, unit }, i) => {
               return (
                 <React.Fragment key={`${i}${muscleGroup}${workoutName}`}>
                   {conditions.map(
@@ -93,12 +93,10 @@ const Card = ({
                       )
                   )}
                   <Workout
-                    workoutName={workoutName}
-                    numOfSets={numOfSets}
-                    numOfReps={numOfReps}
+                    {...{ workoutName, numOfReps, numOfSets, unit }}
                     level={data && data[i]}
-                    increase={() => setWorkoutValues(i, 1)}
-                    decrease={() => setWorkoutValues(i, -1)}
+                    increase={() => setWorkoutValues(i, 2.5)}
+                    decrease={() => setWorkoutValues(i, -2.5)}
                   />
                 </React.Fragment>
               );
