@@ -9,6 +9,7 @@ const ShoulderIcon = ({ startColor, stopColor }: IconProp) => {
       height="752pt"
       viewBox="0 0 752 752"
       preserveAspectRatio="xMidYMid meet"
+      className="muscle-group-icon"
     >
       <defs>
         <linearGradient id="shoulder-bg">

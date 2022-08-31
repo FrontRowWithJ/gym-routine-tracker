@@ -31,11 +31,11 @@ body,
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
-svg {
+.muscle-group-icon {
   width: 100%;
   height: 100%;
 }
 
-stop {
+.muscle-group-icon stop {
   transition: stop-color 0.6s ease;
 }

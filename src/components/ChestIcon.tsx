@@ -3,7 +3,7 @@ import { IconProp } from "../misc/util";
 const ChestIcon = ({ startColor, stopColor }: IconProp) => {
   return (
     <svg
-      className="logo-container"
+      className="muscle-group-icon"
       version="1.1"
       viewBox="0 0 752 752"
       xmlns="http://www.w3.org/2000/svg"

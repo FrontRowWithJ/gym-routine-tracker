@@ -8,6 +8,7 @@ const ArmIcon = ({ startColor, stopColor }: IconProp) => {
       version="1.1"
       viewBox="0 0 752 752"
       xmlns="http://www.w3.org/2000/svg"
+      className="muscle-group-icon"
     >
       <defs>
         <linearGradient id="arm-bg">
