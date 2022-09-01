@@ -6,7 +6,7 @@ interface WorkoutProps {
   workoutName: string;
   numOfSets: number;
   numOfReps: number;
-  level: number | undefined;
+  level: number;
   increase: () => void;
   decrease: () => void;
   unit: string;
