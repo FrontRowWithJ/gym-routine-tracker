@@ -22,9 +22,7 @@ const setWorkoutValues = (
   val: number,
   data: number[],
   setData: (arr: number[]) => void
-) => {
-  setData(data.map((n, _i) => (i === _i ? n + val : n)));
-};
+) => setData(data.map((n, _i) => (i === _i ? n + val : n)));
 
 const startColors = ["#ffa500", "#227e22", "#f83600"] as const;
 const stopColors = ["yellow", "#66ff00", "#ee812b"] as const;
@@ -58,7 +56,8 @@ const Card = ({
 
   const conditions: ((i: number) => boolean)[] = [
     (i) => i === 0,
-    (i) => i === ABS_AND_CARDIO.length - 1,
+    (i) => i === ABS_AND_CARDIO.length + routine.length - 4,
+    (i) => i === ABS_AND_CARDIO.length + routine.length - 1,
   ];
   return (
     <div ref={cardRef} className="card-container noselect" style={style}>
@@ -83,67 +82,39 @@ const Card = ({
           }}
         >
           <div className="scroller" ref={scrollerRef}>
-            <Label
-              pos={0}
-              text={`${muscleGroup} Exercises`}
-              labelRef={labelRefs[0]}
-            />
-            {routine.map(
+            {[...routine, ...ABS_AND_CARDIO].map(
               ({ workoutName, numOfSets, numOfReps, unit, videoURL }, i) => {
+                const dataArr = i < routine.length ? data : cardioAndAbsData;
+                const setDataArr =
+                  i < routine.length ? setData : setCardioAndAbsData;
+                const index = i % routine.length;
                 return (
                   <React.Fragment key={`${i}${muscleGroup}${workoutName}`}>
-                    <Workout
-                      {...{ workoutName, numOfReps, numOfSets, unit, disable }}
-                      videoURL={videoURL}
-                      level={data && data[i]}
-                      increase={() => setWorkoutValues(i, 2.5, data, setData)}
-                      decrease={() => setWorkoutValues(i, -2.5, data, setData)}
-                      zIndex={5 + routine.length + ABS_AND_CARDIO.length - i}
-                      canShow={!!videoURL && canShow[i]}
-                      enable={() => !!videoURL && enable(i)}
-                    />
-                  </React.Fragment>
-                );
-              }
-            )}
-            {ABS_AND_CARDIO.map(
-              ({ workoutName, numOfSets, numOfReps, unit, videoURL }, i) => {
-                return (
-                  <React.Fragment key={`${i}-${workoutName}`}>
                     {conditions.map(
                       (cond, j) =>
                         cond(i) && (
                           <Label
                             key={`${i}-${j}`}
-                            pos={j + 1}
-                            text={`${["Abs", "Cardio"][j]} Excersizes`}
-                            labelRef={labelRefs[j + 1]}
+                            pos={j}
+                            text={`
+                            ${[muscleGroup, "Abs", "Cardio"][j]} Excersizes`}
+                            labelRef={labelRefs[j]}
                           />
                         )
                     )}
                     <Workout
                       {...{ workoutName, numOfReps, numOfSets, unit, disable }}
                       videoURL={videoURL}
-                      level={cardioAndAbsData[i]}
+                      level={dataArr[index]}
                       increase={() =>
-                        setWorkoutValues(
-                          i,
-                          2.5,
-                          cardioAndAbsData,
-                          setCardioAndAbsData
-                        )
+                        setWorkoutValues(index, 2.5, dataArr, setDataArr)
                       }
                       decrease={() =>
-                        setWorkoutValues(
-                          i,
-                          -2.5,
-                          cardioAndAbsData,
-                          setCardioAndAbsData
-                        )
+                        setWorkoutValues(index, -2.5, dataArr, setDataArr)
                       }
-                      zIndex={5 + ABS_AND_CARDIO.length - i}
-                      canShow={canShow[i + routine.length]}
-                      enable={() => enable(routine.length + i)}
+                      zIndex={5 + routine.length + ABS_AND_CARDIO.length - i}
+                      canShow={!!videoURL && canShow[i]}
+                      enable={() => !!videoURL && enable(i)}
                     />
                   </React.Fragment>
                 );
