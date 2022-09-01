@@ -20,12 +20,8 @@ const isLocalhost = Boolean(
     )
 );
 
-const onload = (
-  config: any,
-  resolve: (value: unknown) => void,
-  reject: (reason?: any) => void
-) => {
-  const swUrl = `${process.env.PUBLIC_URL}/service-worker.ts`;
+const onload = (config, resolve, reject) => {
+  const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
   if (isLocalhost) {
     // This is running on localhost. Let's check if a service worker still exists or not.
     checkValidServiceWorker(swUrl, config, resolve, reject);
@@ -44,7 +40,7 @@ const onload = (
   }
 };
 
-export const register = async (config?: any) => {
+export const register = async (config) => {
   return await new Promise((resolve, reject) => {
     if (
       // process.env.NODE_ENV === "production" &&
@@ -52,10 +48,7 @@ export const register = async (config?: any) => {
       "PushManager" in window
     ) {
       // The URL constructor is available in all browsers that support SW.
-      const publicUrl = new URL(
-        process.env.PUBLIC_URL as string,
-        window.location.href
-      );
+      const publicUrl = new URL(process.env.PUBLIC_URL, window.location.href);
       if (publicUrl.origin !== window.location.origin) {
         // Our service worker won't work if PUBLIC_URL is on a different origin
         // from what our page is served on. This might happen if a CDN is used to
@@ -70,12 +63,7 @@ export const register = async (config?: any) => {
   });
 };
 
-const registerValidSW = async (
-  swUrl: string,
-  config: any,
-  resolve: (value: unknown) => void,
-  reject: (reason?: any) => void
-) => {
+const registerValidSW = async (swUrl, config, resolve, reject) => {
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => {
@@ -121,12 +109,7 @@ const registerValidSW = async (
     });
 };
 
-const checkValidServiceWorker = async (
-  swUrl: string,
-  config:string,
-  resolve: (value: unknown) => void,
-  reject: (reason?: any) => void
-) => {
+const checkValidServiceWorker = async (swUrl, config, resolve, reject) => {
   // Check if the service worker can be found. If it can't reload the page.
   fetch(swUrl, {
     headers: { "Service-Worker": "script" },

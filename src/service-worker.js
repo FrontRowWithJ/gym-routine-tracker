@@ -13,7 +13,7 @@ import { StaleWhileRevalidate } from "workbox-strategies";
 // Their URLs are injected into the manifest variable below.
 // This variable must be present somewhere in your service worker file,
 // even if you decide not to use precaching. See https://cra.link/PWA
-precacheAndRoute((self as any).__WB_MANIFEST);
+precacheAndRoute(self.__WB_MANIFEST);
 
 // self.importScripts("./cache-pwa.ts", "./handle-push-notificaitons.ts");
 
@@ -64,7 +64,7 @@ registerRoute(
 // This allows the web app to trigger skipWaiting via registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
-    (self as any).skipWaiting();
+    self.skipWaiting();
   }
 });
 
