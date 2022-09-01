@@ -48,7 +48,7 @@ const App = () => {
   const [indicatorStyle, setIndicatorStyle] = useState<CSSProperties>();
   const [borderPos, setStyle] = useState("0");
   const [canPress, setPress] = useState(true);
-  
+
   const startSwipe = (evt: Event) => {
     const { pageX, pageY } = getEvent(evt);
     setStart({ x: pageX, y: pageY, t: +new Date() });
@@ -171,18 +171,23 @@ const App = () => {
             if (canPress) {
               setPress(false);
               setStyle("calc(100% - 2px)");
-              setTimeout(() => setStyle("0"), 1500);
               fetch(`${updateGymDataURL}?muscleGroup=${muscleGroups[curr]}`, {
                 method: "POST",
                 mode: "cors",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dataArr[curr]),
-              }).then(({ status }) => {
+                body: JSON.stringify({
+                  [muscleGroups[curr]]: dataArr[curr],
+                  cardioAndAbs: cardioAndAbsData,
+                }),
+              }).then(({ status, body }) => {
                 if (status === 200) {
                   setPress(true);
                   setIndicatorStyle({ opacity: 1, bottom: "4.5rem" });
-                  setTimeout(() => setIndicatorStyle({}), 1000);
-                }
+                  setTimeout(() => {
+                    setIndicatorStyle({});
+                    setStyle("0");
+                  }, 1000);
+                } else console.error(body);
               });
             }
           }}
