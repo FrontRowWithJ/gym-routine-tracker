@@ -1,5 +1,6 @@
 :root {
-  --border-width: 2px;
+  --border-width: 4px;
+  --border-ofset: 2rem;
 }
 
 .app {
@@ -36,7 +37,12 @@
   backdrop-filter: blur(7px);
   color: white;
   font-family: "Circular Std Book", sans-serif;
-  clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+  clip-path: polygon(
+    var(--border-ofset) 0%,
+    100% 0%,
+    calc(100% - var(--border-ofset)) 100%,
+    0% 100%
+  );
   position: relative;
 }
 
@@ -73,8 +79,8 @@
 }
 
 #left-border {
-  clip-path: polygon(0 0, 50% 0, 40% 100%, 0% 100%);
-  left: calc(-40% + var(--border-width));
+  clip-path: polygon(0 0, 50% 0, calc(50% - var(--border-ofset)) 100%, 0% 100%);
+  left: calc(calc(-50% + var(--border-ofset)) + var(--border-width));
   height: 100%;
   background: linear-gradient(
     180deg,
@@ -98,7 +104,7 @@
 }
 
 #right-border {
-  clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%);
+  clip-path: polygon(50% 0, 100% 0, 100% 100%, calc(50% - var(--border-ofset)) 100%);
   right: calc(-50% + var(--border-width));
   height: 100%;
   background: linear-gradient(
