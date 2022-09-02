@@ -82,44 +82,42 @@ const Card = ({
           }}
         >
           <div className="scroller" ref={scrollerRef}>
-            {[...routine, ...ABS_AND_CARDIO].map(
-              ({ workoutName, numOfSets, numOfReps, unit, videoURL }, i) => {
-                const dataArr = i < routine.length ? data : cardioAndAbsData;
-                const setDataArr =
-                  i < routine.length ? setData : setCardioAndAbsData;
-                const index = i % routine.length;
-                return (
-                  <React.Fragment key={`${i}${muscleGroup}${workoutName}`}>
-                    {conditions.map(
-                      (cond, j) =>
-                        cond(i) && (
-                          <Label
-                            key={`${i}-${j}`}
-                            pos={j}
-                            text={`
+            {[...routine, ...ABS_AND_CARDIO].map((a, i) => {
+              const { workoutName, numOfSets, numOfReps } = a;
+              const { unit, videoURL, unitAmount } = a;
+              const dataArr = i < routine.length ? data : cardioAndAbsData;
+              const setDataArr =
+                i < routine.length ? setData : setCardioAndAbsData;
+              const index = i % routine.length;
+              const changeAmount = (unitAmount: number) =>
+                setWorkoutValues(index, unitAmount, dataArr, setDataArr);
+              return (
+                <React.Fragment key={`${i}${muscleGroup}${workoutName}`}>
+                  {conditions.map(
+                    (cond, j) =>
+                      cond(i) && (
+                        <Label
+                          key={`${i}-${j}`}
+                          pos={j}
+                          text={`
                             ${[muscleGroup, "Abs", "Cardio"][j]} Excersizes`}
-                            labelRef={labelRefs[j]}
-                          />
-                        )
-                    )}
-                    <Workout
-                      {...{ workoutName, numOfReps, numOfSets, unit, disable }}
-                      videoURL={videoURL}
-                      level={dataArr[index]}
-                      increase={() =>
-                        setWorkoutValues(index, 2.5, dataArr, setDataArr)
-                      }
-                      decrease={() =>
-                        setWorkoutValues(index, -2.5, dataArr, setDataArr)
-                      }
-                      zIndex={5 + routine.length + ABS_AND_CARDIO.length - i}
-                      canShow={!!videoURL && canShow[i]}
-                      enable={() => !!videoURL && enable(i)}
-                    />
-                  </React.Fragment>
-                );
-              }
-            )}
+                          labelRef={labelRefs[j]}
+                        />
+                      )
+                  )}
+                  <Workout
+                    {...{ workoutName, numOfReps, numOfSets, unit, disable }}
+                    videoURL={videoURL}
+                    level={dataArr[index]}
+                    increase={() => changeAmount(unitAmount)}
+                    decrease={() => changeAmount(-unitAmount)}
+                    zIndex={5 + routine.length + ABS_AND_CARDIO.length - i}
+                    canShow={!!videoURL && canShow[i]}
+                    enable={() => !!videoURL && enable(i)}
+                  />
+                </React.Fragment>
+              );
+            })}
             {containerRef.current && (
               <div
                 style={{
