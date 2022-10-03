@@ -89,7 +89,7 @@ const App = () => {
     cardRefs.forEach(
       (ref) => ref.current && (ref.current.style.transitionDuration = "")
     );
-    if (appRef.current && delta) {
+    if (appRef.current) {
       const w = appRef.current.clientWidth;
       const duration = +new Date() - start.t;
       const absX = Math.abs(delta.x);
