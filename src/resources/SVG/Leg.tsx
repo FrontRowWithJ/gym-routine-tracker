@@ -1,5 +1,6 @@
-import { IconProp } from "../misc/util";
-const LegIcon = ({ startColor, stopColor }: IconProp) => {
+import { SVGProp } from "./SVGTypes";
+
+export const Leg = ({ startColor, stopColor }: SVGProp) => {
   return (
     <svg
       width="752pt"
@@ -25,5 +26,3 @@ const LegIcon = ({ startColor, stopColor }: IconProp) => {
     </svg>
   );
 };
-
-export default LegIcon;

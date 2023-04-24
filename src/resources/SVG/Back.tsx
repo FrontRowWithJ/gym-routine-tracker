@@ -1,6 +1,6 @@
-import { IconProp } from "../misc/util";
+import { SVGProp } from "./SVGTypes";
 
-const BackIcon = ({ startColor, stopColor }: IconProp) => {
+export const Back = ({ startColor, stopColor }: SVGProp) => {
   return (
     <svg
       width="752pt"
@@ -34,5 +34,3 @@ const BackIcon = ({ startColor, stopColor }: IconProp) => {
     </svg>
   );
 };
-
-export default BackIcon;

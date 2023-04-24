@@ -1,27 +1,13 @@
 import { CSSProperties, useRef, useState } from "react";
-import "../style/workout.css";
-import YoutubeIcon from "./YoutubeIcon";
-
-interface WorkoutProps {
-  workoutName: string;
-  numOfSets: number;
-  numOfReps: number;
-  level: number;
-  increase: () => void;
-  decrease: () => void;
-  unit: string;
-  zIndex: number;
-  canShow: boolean;
-  enable: () => void;
-  disable: () => void;
-  videoURL?: string;
-}
+import "./workout.css";
+import { Youtube } from "../../resources/SVG/Youtube";
+import { WorkoutProps } from "./types";
 
 const SHOW_STYLE: CSSProperties = { opacity: 1, top: "0" };
 const HIDE_STYLE: CSSProperties = { opacity: 0, top: "100%" };
 const HIDE_VIDEO_STYLE: CSSProperties = { height: "0", top: "0" };
 const SHOW_VIDEO_STYLE: CSSProperties = { height: "56.25vw", top: "100%" };
-const Workout = ({
+export const Workout = ({
   workoutName,
   numOfReps,
   numOfSets,
@@ -29,25 +15,22 @@ const Workout = ({
   increase,
   decrease,
   unit,
-  zIndex,
   canShow,
   enable,
   disable,
   videoURL,
 }: WorkoutProps) => {
-  const isDataReady = level !== undefined;
   const [style, setStyle] = useState<CSSProperties>(HIDE_STYLE);
   const [canPress, setPress] = useState<boolean>(true);
   const [canShowVideo, setShowVideo] = useState<boolean>(false);
   const iidRef = useRef<NodeJS.Timeout>();
-  if (!canShow) {
-    clearInterval(iidRef.current);
-  }
+  if (!canShow) clearInterval(iidRef.current);
+
   return (
     <div className="workout-row">
       {videoURL && (
-        <div className="youtube-icon-container" style={{ zIndex }}>
-          <YoutubeIcon
+        <div className="youtube-icon-container">
+          <Youtube
             onClick={() => {
               if (!canShow) {
                 enable();
@@ -70,7 +53,6 @@ const Workout = ({
                 loading="lazy"
                 src={videoURL}
                 title="YouTube video player"
-                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
@@ -81,10 +63,7 @@ const Workout = ({
       <div className="workout-label">
         <div>{workoutName}</div>
       </div>
-      <div
-        className="input-container"
-        style={!isDataReady ? { animation: "fading 1.5s infinite" } : {}}
-      >
+      <div className="input-container">
         <div
           draggable={false}
           onPointerDown={() => increase()}
@@ -105,7 +84,7 @@ const Workout = ({
             }
           }}
         >
-          {isDataReady && `${level} ${unit}`}
+          {`${level} ${unit}`}
         </div>
         <div onPointerDown={() => decrease()} className="decrease-button">
           -
@@ -131,5 +110,3 @@ const Workout = ({
     </div>
   );
 };
-
-export default Workout;

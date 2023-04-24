@@ -1,6 +1,6 @@
-import { IconProp } from "../misc/util";
+import { SVGProp } from "./SVGTypes";
 
-const ShoulderIcon = ({ startColor, stopColor }: IconProp) => {
+export const Shoulder = ({ startColor, stopColor }: SVGProp) => {
   return (
     <svg
       version="1.1"
@@ -83,5 +83,3 @@ const ShoulderIcon = ({ startColor, stopColor }: IconProp) => {
     </svg>
   );
 };
-
-export default ShoulderIcon;

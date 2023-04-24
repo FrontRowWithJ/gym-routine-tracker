@@ -1,8 +1,4 @@
-interface YoutubeIconProp {
-  onClick: () => void;
-}
-
-const YoutubeIcon = ({ onClick }: YoutubeIconProp) => {
+export const Youtube = ({ onClick }: { onClick: () => void }) => {
   return (
     <svg
       className="youtube-icon"
@@ -22,5 +18,3 @@ const YoutubeIcon = ({ onClick }: YoutubeIconProp) => {
     </svg>
   );
 };
-
-export default YoutubeIcon;

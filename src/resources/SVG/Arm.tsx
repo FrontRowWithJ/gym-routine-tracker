@@ -1,6 +1,6 @@
-import { IconProp } from "../misc/util";
+import { SVGProp } from "./SVGTypes";
 
-const ArmIcon = ({ startColor, stopColor }: IconProp) => {
+export const Arm = ({ startColor, stopColor }: SVGProp) => {
   return (
     <svg
       width="752pt"
@@ -23,5 +23,3 @@ const ArmIcon = ({ startColor, stopColor }: IconProp) => {
     </svg>
   );
 };
-
-export default ArmIcon;

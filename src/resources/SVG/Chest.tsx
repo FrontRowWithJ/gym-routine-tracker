@@ -1,6 +1,6 @@
-import { IconProp } from "../misc/util";
+import { SVGProp } from "./SVGTypes";
 
-const ChestIcon = ({ startColor, stopColor }: IconProp) => {
+export const Chest = ({ startColor, stopColor }: SVGProp) => {
   return (
     <svg
       className="muscle-group-icon"
@@ -44,5 +44,3 @@ const ChestIcon = ({ startColor, stopColor }: IconProp) => {
     </svg>
   );
 };
-
-export default ChestIcon;

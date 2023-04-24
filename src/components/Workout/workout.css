@@ -27,6 +27,12 @@
   height: 0;
   background-color: black;
   right: 0;
+  isolation: isolate;
+  z-index: 100;
+}
+
+.youtube-video-container > iframe {
+  border: 0;
 }
 
 .workout-label {

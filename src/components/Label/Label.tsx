@@ -1,11 +1,7 @@
-import "../style/label.css";
+import "./label.css";
+import { LabelProps } from "./types";
 
-interface LabelProp {
-  text: string;
-  pos: number;
-  labelRef: React.RefObject<HTMLDivElement>;
-}
-const Label = ({ text, pos, labelRef }: LabelProp) => (
+export const Label = ({ text, pos, labelRef }: LabelProps) => (
   <div ref={labelRef} className={`label-${pos} center`}>
     <div className="line"></div>
     <div className="text center">
@@ -15,4 +11,3 @@ const Label = ({ text, pos, labelRef }: LabelProp) => (
   </div>
 );
 
-export default Label;
