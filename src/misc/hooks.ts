@@ -13,16 +13,12 @@ export const useSwipe = <TElement extends HTMLElement>(
   const [curr, setCurr] = useState<number>(0);
   const [isScrolling, setScrolling] = useState<boolean>();
 
-  const startSwipe = ({
-    pageX: x,
-    pageY: y,
-    isPrimary,
-  }: PointerEvent<TElement>) => {
+  const startSwipe = ({ pageX: x, pageY: y, isPrimary }: PointerEvent) => {
     if (!isPrimary) return;
     setStart({ x, y, t: +new Date() });
   };
 
-  const moveSwipe = ({ pageX, pageY, isPrimary }: PointerEvent<TElement>) => {
+  const moveSwipe = ({ pageX, pageY, isPrimary }: PointerEvent) => {
     if (!start) return;
     if (!isPrimary) return;
     const d = { x: pageX - start.x, y: pageY - start.y };
@@ -82,18 +78,16 @@ export const useSwipe = <TElement extends HTMLElement>(
   return { startSwipe, moveSwipe, endSwipe, curr };
 };
 
-export const useToggle = (length: number) => {
-  const [array, setArray] = useState<boolean[]>(times(length, false));
-  const disable = () => setArray(times(length, false));
-  const enable = (i: number) => setArray(array.map((b, j) => i === j || b));
-  return [array, enable, disable] as const;
-};
+export function useToggle(): [boolean, () => void, () => void];
+export function useToggle(
+  value: number
+): [boolean[], (i: number) => void, () => void];
 
-export const useData = (data?: number[]) => {
-  const [arr, set] = useState<number[]>(data ?? []);
-  const setArr = (arr: number[]) => {
-    arr.forEach((n, i) => n < 0 && (arr[i] = 0));
-    set(arr);
-  };
-  return [arr, setArr] as const;
-};
+export function useToggle(value?: number) {
+  const [array, setArray] = useState<boolean[]>(times(value ?? 1, false));
+  const toggle = (val: boolean) => () => setArray(times(value ?? 1, val));
+  const enable = (i: number) => setArray(array.map((b, j) => i === j || b));
+  return value
+    ? ([array, enable, toggle(false)] as const)
+    : ([array[0], toggle(true), toggle(false)] as const);
+}
