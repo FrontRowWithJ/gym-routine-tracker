@@ -2,7 +2,7 @@ export interface Workout {
   workoutName: string;
   numOfSets: number;
   numOfReps: number;
-  unit: string;
+  unit: "" | "mins" | "kg" | "s";
   unitAmount: number;
   videoURL: "" | `https://www.youtube.com/embed/${string}`;
   amount: number;

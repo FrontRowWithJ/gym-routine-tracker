@@ -3,3 +3,7 @@ export * from "./Chest";
 export * from "./Back";
 export * from "./Shoulder";
 export * from "./Leg";
+export * from "./Add";
+export * from "./BackButton";
+export * from "./Minus";
+export * from "./Plus";

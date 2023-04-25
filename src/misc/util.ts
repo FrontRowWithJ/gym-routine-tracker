@@ -13,3 +13,5 @@ export const BASE_URL = `${
 export const translate = (e: HTMLDivElement, d: number) =>
   e && (e.style.left = d + "px");
 export const getLeft = (i: number, x: number) => (i - x) * 100 + "%";
+
+export const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);

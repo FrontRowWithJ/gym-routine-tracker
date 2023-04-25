@@ -6,6 +6,9 @@ export interface CardProp {
   style?: CSSProperties;
   cardRef: React.RefObject<HTMLDivElement>;
   muscleGroupRoutine: readonly Workout[];
+  setMuscleGroupRoutine: React.Dispatch<
+    React.SetStateAction<readonly Workout[]>
+  >;
   cardioRoutine: readonly Workout[];
   absRoutine: readonly Workout[];
   routineData: number[];

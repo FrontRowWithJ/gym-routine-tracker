@@ -1,4 +1,6 @@
 export interface SVGProp {
-  startColor: string;
-  stopColor: string;
+  startColor?: string;
+  stopColor?: string;
+  fill?: string;
+  className?: string;
 }
