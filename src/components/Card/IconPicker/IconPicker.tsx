@@ -4,7 +4,7 @@ import {
   Back as back,
   Shoulder as shoulder,
   Leg as leg,
-} from "../../resources/SVG";
+} from "../../../resources/SVG";
 import { IconPickerProps } from "./types";
 
 export const IconPicker = ({ muscleGroup, startColor, stopColor }: IconPickerProps) =>

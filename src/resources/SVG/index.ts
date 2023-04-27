@@ -7,3 +7,4 @@ export * from "./Add";
 export * from "./BackButton";
 export * from "./Minus";
 export * from "./Plus";
+export * from "./Delete";

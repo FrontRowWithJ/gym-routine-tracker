@@ -8,11 +8,11 @@ export interface Workout {
   amount: number;
 }
 
+export type Routine = readonly Workout[];
+
 export type muscleGroup = (typeof muscleGroups)[number];
 
-export type Routine = {
-  [key in muscleGroup | "cardio" | "abs"]: readonly Workout[];
-};
+export type Routines = { [key in muscleGroup | "cardio" | "abs"]: Routine };
 
 export const muscleGroups = [
   "chest",

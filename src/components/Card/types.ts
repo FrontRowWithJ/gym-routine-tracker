@@ -1,20 +1,16 @@
 import { CSSProperties } from "react";
-import { Workout, muscleGroup } from "../../misc/types";
+import { Routine, muscleGroup } from "../../misc/types";
 
 export interface CardProp {
   muscleGroup: muscleGroup;
   style?: CSSProperties;
   cardRef: React.RefObject<HTMLDivElement>;
-  muscleGroupRoutine: readonly Workout[];
+  muscleGroupRoutine: Routine;
   setMuscleGroupRoutine: React.Dispatch<
-    React.SetStateAction<readonly Workout[]>
+    React.SetStateAction<Routine>
   >;
-  cardioRoutine: readonly Workout[];
-  absRoutine: readonly Workout[];
-  routineData: number[];
-  setRoutineData: React.Dispatch<React.SetStateAction<number[]>>;
-  cardioData: number[];
-  setCardioData: React.Dispatch<React.SetStateAction<number[]>>;
-  absData: number[];
-  setAbsData: React.Dispatch<React.SetStateAction<number[]>>;
+  cardioRoutine: Routine;
+  setCardioRoutine: React.Dispatch<React.SetStateAction<Routine>>;
+  absRoutine: Routine;
+  setAbsRoutine: React.Dispatch<React.SetStateAction<Routine>>;
 }

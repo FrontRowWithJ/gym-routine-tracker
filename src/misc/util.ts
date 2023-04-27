@@ -1,3 +1,4 @@
+import { Routine } from "./types";
 type Callback<T> = (value: number) => T;
 
 export function times<T>(n: number, iter: T | Callback<T>) {
@@ -15,3 +16,25 @@ export const translate = (e: HTMLDivElement, d: number) =>
 export const getLeft = (i: number, x: number) => (i - x) * 100 + "%";
 
 export const capitalise = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+
+const change = (routine: Routine, index: number, amount: number) => {
+  const newRoutine = [...routine];
+  newRoutine[index] = { ...newRoutine[index], amount };
+  return newRoutine;
+};
+
+export const setWorkoutValues = (
+  i: number,
+  val: number,
+  setRoutine: React.Dispatch<React.SetStateAction<Routine>>
+) => {
+  const increase = () => {
+    setRoutine((routine) => change(routine, i, routine[i].amount + val));
+  };
+  const decrease = () => {
+    setRoutine((routine) =>
+      change(routine, i, Math.max(routine[i].amount - val, 0))
+    );
+  };
+  return [increase, decrease] as const;
+};

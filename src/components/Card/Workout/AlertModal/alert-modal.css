@@ -1,0 +1,97 @@
+@keyframes backdrop-filter {
+  0% {
+    backdrop-filter: blur(5px) opacity(0);
+  }
+
+  100% {
+    backdrop-filter: blur(5px) opacity(1);
+  }
+}
+
+.alert-modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  border: 1px solid black;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: backdrop-filter 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal forwards;
+  z-index: 300;
+}
+
+@keyframes translate-2 {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.alert-modal > div {
+  width: 15rem;
+  aspect-ratio: 2 / 1;
+  border-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: grid;
+  place-items: center;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 5rem 1fr;
+  position: relative;
+  animation: translate-2 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal forwards;
+}
+
+.alert-modal > div > span {
+  grid-row: 1 / 2;
+  grid-column: 1 / 3;
+  color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.alert-modal > div > div {
+  grid-row: 2 / 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: 80%;
+  border-radius: 1rem;
+  cursor: pointer;
+  background: linear-gradient(
+    91deg,
+    rgba(29, 180, 150, 1) 0%,
+    rgba(217, 204, 115, 1) 98%,
+    rgba(224, 205, 116, 1) 100%
+  );
+}
+
+.alert-modal > div > div > button {
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  font-weight: bold;
+  border-radius: 1rem;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.alert-modal > div > div > button:hover {
+  color: #F47174;
+}
+
+.alert-modal > div > div:first-of-type > button:hover {
+  color: #93CAED;
+}

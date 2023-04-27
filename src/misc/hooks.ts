@@ -48,31 +48,30 @@ export const useSwipe = <TElement extends HTMLElement>(
     childRefs.forEach(
       (ref) => ref.current && (ref.current.style.transitionDuration = "")
     );
-    if (parentRef.current) {
-      const w = parentRef.current.clientWidth;
-      const duration = +new Date() - start.t;
-      const absX = Math.abs(delta.x);
-      const isValidSwipe = (duration < 250 && absX > 20) || absX > w / 2;
-      const l = curr ? childRefs[curr - 1].current : undefined;
-      const m = childRefs[curr].current;
-      const r = curr !== 4 ? childRefs[curr + 1].current : undefined;
-      if (!isScrolling) {
-        if (isValidSwipe) {
-          const direction = absX / delta.x;
-          const pos =
-            direction < 0
-              ? [2 * -w, +(curr !== 4) * -w, 0]
-              : [0, +(curr !== 0) * w, 2 * w];
-          [l, m, r].forEach((e, i) => e && translate(e, pos[i]));
-          const newCurr =
-            direction < 0 ? (r ? curr + 1 : curr) : l ? curr - 1 : curr;
-          setCurr(newCurr);
-        } else [l, m, r].forEach((e, i) => e && translate(e, [-w, 0, w][i]));
-      }
-      setDelta(undefined);
-      setStart(undefined);
-      setScrolling(undefined);
+    if (parentRef.current === null) return;
+    const w = parentRef.current.clientWidth;
+    const duration = +new Date() - start.t;
+    const absX = Math.abs(delta.x);
+    const isValidSwipe = (duration < 250 && absX > 20) || absX > w / 2;
+    const l = curr ? childRefs[curr - 1].current : undefined;
+    const m = childRefs[curr].current;
+    const r = curr !== 4 ? childRefs[curr + 1].current : undefined;
+    if (!isScrolling) {
+      if (isValidSwipe) {
+        const direction = absX / delta.x;
+        const pos =
+          direction < 0
+            ? [2 * -w, +(curr !== 4) * -w, 0]
+            : [0, +(curr !== 0) * w, 2 * w];
+        [l, m, r].forEach((e, i) => e && translate(e, pos[i]));
+        const newCurr =
+          direction < 0 ? (r ? curr + 1 : curr) : l ? curr - 1 : curr;
+        setCurr(newCurr);
+      } else [l, m, r].forEach((e, i) => e && translate(e, [-w, 0, w][i]));
     }
+    setDelta(undefined);
+    setStart(undefined);
+    setScrolling(undefined);
   };
 
   return { startSwipe, moveSwipe, endSwipe, curr };

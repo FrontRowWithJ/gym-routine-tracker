@@ -1,13 +1,11 @@
+import { Workout } from "../../../misc";
+
 export interface WorkoutProps {
-  workoutName: string;
-  numOfSets: number;
-  numOfReps: number;
-  level: number;
+  workout: Workout;
   increase: () => void;
   decrease: () => void;
-  unit: string;
   canShow: boolean;
   enable: () => void;
   disable: () => void;
-  videoURL?: string;
+  removeWorkout: () => void;
 }
