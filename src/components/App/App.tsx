@@ -23,9 +23,7 @@ const App = () => {
 
   const [chestRoutine, setChestRoutine] = useState<Routine>([]);
   const [backRoutine, setBackRoutine] = useState<Routine>([]);
-  const [shoulderRoutine, setShoulderRoutine] = useState<Routine>(
-    []
-  );
+  const [shoulderRoutine, setShoulderRoutine] = useState<Routine>([]);
   const [legRoutine, setLegRoutine] = useState<Routine>([]);
   const [armRoutine, setArmRoutine] = useState<Routine>([]);
   const [cardioRoutine, setCardioRoutine] = useState<Routine>([]);
@@ -42,7 +40,6 @@ const App = () => {
     cardio: cardioRoutine,
     abs: absRoutine,
   };
-
   const setRoutines: {
     [key in muscleGroup | "cardio" | "abs"]: React.Dispatch<
       React.SetStateAction<Routine>
@@ -85,7 +82,7 @@ const App = () => {
           cardRef={cardRefs[i]}
           style={{ left: getLeft(i, curr) }}
           key={muscleGroup}
-          {...{ muscleGroup }}
+          muscleGroup={muscleGroup}
           muscleGroupRoutine={routines[muscleGroup]}
           setMuscleGroupRoutine={setRoutines[muscleGroup]}
           setAbsRoutine={setAbsRoutine}

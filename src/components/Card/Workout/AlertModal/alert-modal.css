@@ -17,7 +17,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: backdrop-filter 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal forwards;
+  animation: backdrop-filter 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal
+    forwards;
   z-index: 300;
 }
 
@@ -31,6 +32,23 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+@keyframes translate-2-reverse {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.reverse-translate {
+  animation: translate-2-reverse 1s cubic-bezier(0.22, 1, 0.36, 1) 0s 1 normal
+    forwards !important;
 }
 
 .alert-modal > div {
@@ -89,9 +107,9 @@
 }
 
 .alert-modal > div > div > button:hover {
-  color: #F47174;
+  color: #f47174;
 }
 
 .alert-modal > div > div:first-of-type > button:hover {
-  color: #93CAED;
+  color: #93caed;
 }

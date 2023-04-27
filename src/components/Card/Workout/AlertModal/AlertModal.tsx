@@ -2,6 +2,12 @@ import { AlertModalProps } from "./types";
 import "./alert-modal.css";
 
 export const AlertModal = ({ message, close, callback }: AlertModalProps) => {
+  const closeWrapper = () => {
+    setTimeout(close, 1000);
+    document
+      .querySelector(".alert-modal > div")
+      ?.classList.add("reverse-translate");
+  };
   return (
     <div className="alert-modal">
       <div>
@@ -11,14 +17,14 @@ export const AlertModal = ({ message, close, callback }: AlertModalProps) => {
             type="button"
             onClick={() => {
               callback();
-              close();
+              closeWrapper();
             }}
           >
             Yes
           </button>
         </div>
         <div>
-          <button type="button" onClick={close}>
+          <button type="button" onClick={closeWrapper}>
             No
           </button>
         </div>
