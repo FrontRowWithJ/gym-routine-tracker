@@ -20,10 +20,9 @@ const Router = () => {
     element,
   }));
   const otherRoutes = [
-    { path: "/", element: <Home /> },
+    { path: "/*", element: <Home /> },
     { path: "/login", element: <Login /> },
     { path: "/register", element: <Register /> },
-    { path: "/*", element: <div>404</div> },
   ] as const;
   return useRoutes<screenRoute>([...routes, ...otherRoutes]);
 };

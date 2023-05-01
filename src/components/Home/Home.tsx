@@ -25,12 +25,13 @@ export const Home = () => {
   const navigate = useNavigate();
   const path = window.location.pathname;
   const str = path!.substring(path!.lastIndexOf("/") + 1);
-  const index = muscleGroups.indexOf(str as muscleGroup);
+  const i = muscleGroups.indexOf(str as muscleGroup);
+  const index = i === -1 ? 0 : i;
   const { curr, startSwipe, moveSwipe, endSwipe } = useSwipe(
     cardRefs,
     homepageRef,
     (i) => navigate(`/musclegroup/${muscleGroups[i]}`),
-    index === -1 ? 0 : index
+    index
   );
 
   const [chestRoutine, setChestRoutine] = useState<Routine>([]);
@@ -67,7 +68,6 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn()) return navigate("/login");
     fetch(`${BASE_URL}/get_gym_routine`, {
       method: "GET",
       credentials: "include",
@@ -82,8 +82,12 @@ export const Home = () => {
         setCardioRoutine(routine["cardio"]);
         setAbsRoutine(routine["abs"]);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navigate]);
+  }, []);
+
+  useEffect(() => {
+    if (!isLoggedIn()) return navigate("/login");
+    navigate(`/musclegroup/${muscleGroups[index]}`);
+  }, [navigate, index]);
 
   return (
     <main
