@@ -4,20 +4,16 @@ import { RoutineProps } from "./types";
 
 export const Routine = ({
   routine,
+  setRoutine,
   canShow,
   enable,
   disable,
-  setRoutine,
 }: RoutineProps) => {
   return (
     <>
       {routine.map((workout, i) => {
-        const { videoURL, unitAmount } = workout;
-        const [increase, decrease] = setWorkoutValues(
-          i,
-          unitAmount,
-          setRoutine
-        );
+        const { videoURL } = workout;
+        const [increase, decrease] = setWorkoutValues(i, setRoutine);
         return (
           <Workout
             key={i}

@@ -11,7 +11,7 @@
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.add-modal-container form {
+.add-modal-form {
   width: 100%;
   height: 100%;
   padding: 0.5rem;
@@ -44,7 +44,7 @@ form header {
   transform: translateX(-5px);
 }
 
-.add-modal-container form h6 {
+.add-modal-form h6 {
   grid-column: 1 / 3;
   grid-row: 1 / 2;
   color: white;
@@ -52,7 +52,7 @@ form header {
   align-items: center;
 }
 
-.add-modal-container form label {
+.add-modal-form label {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.9rem;
   margin: 0;
@@ -70,12 +70,12 @@ form header {
   }
 }
 
-.add-modal-container form > :where(div, fieldset, button) {
+.add-modal-form > :where(div, fieldset, button) {
   position: relative;
   animation-fill-mode: forwards;
 }
 
-.add-modal-container form > div > div {
+.add-modal-form > div > div {
   width: 100%;
   border: 1px solid;
   border-image: linear-gradient(
@@ -88,7 +88,7 @@ form header {
   margin-bottom: 0.5rem;
 }
 
-.add-modal-container form input {
+.add-modal-form input {
   border: none;
   outline: none;
   font-size: 1rem;
@@ -183,7 +183,7 @@ form header {
   font-weight: bold;
 }
 
-.add-modal-container form .checkbox-fieldset {
+.add-modal-form .checkbox-fieldset {
   border: none;
   padding: 0;
   margin: 0;
@@ -235,7 +235,7 @@ form header {
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-[type="submit"] {
+.add-modal-form [type="submit"] {
   width: 100%;
   height: 2rem;
   border: none;
@@ -260,10 +260,10 @@ form header {
   color: white;
 }
 
-[type="submit"]:hover {
+.add-modal-form [type="submit"]:hover {
   background-position: right;
 }
 
-[type="submit"]:active {
+.add-modal-form [type="submit"]:active {
   transform: scale(0.95);
 }

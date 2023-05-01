@@ -17,7 +17,7 @@
 
 .label-0,
 .label-0 :where(.shown-text, .line) {
-  background: linear-gradient(135deg, #ffa500 33.33%, yellow 66.66%);
+  background: linear-gradient(135deg, #ffa500 33.33%, #ffff00 66.66%);
 }
 
 .label-1,

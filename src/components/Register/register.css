@@ -1,0 +1,65 @@
+.register-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.register-page [class^="label"] {
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+
+.register-page form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+}
+
+.register-input {
+  width: calc(100% - 2rem);
+  margin: 1rem;
+}
+
+.register-page form button {
+  border-radius: 10px;
+  /* background-color: #008080; */
+  /* background: linear-gradient(135deg, #008080 33.33%, #61a4c2 66.66%); */
+  background: linear-gradient(135deg, #227e22 33.33%, #66ff00 66.66%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: calc(100% - 2rem);
+  height: 3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "Poppins", sans-serif;
+  border: 2px solid #ffffff80;
+  border: none;
+  cursor: pointer;
+  background-size: 200% 100%;
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.register-page form button:active {
+  transform: scale(0.95);
+  background-position: right;
+}
+
+.register-page ul li {
+  transition: all 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+  color: #61a4c2;
+}
+
+.register-page form + div span {
+  color: white;
+}
+
+.register-page div a {
+  color: #4d6cfa;
+  cursor: pointer;
+}

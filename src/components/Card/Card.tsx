@@ -1,6 +1,6 @@
 import "./card.css";
 import React, { useRef, useState } from "react";
-import { Label } from "./Label";
+import { Label } from "../Label";
 import { IconPicker } from "./IconPicker";
 import { times, useToggle } from "../../misc";
 import { CardProp } from "./types";

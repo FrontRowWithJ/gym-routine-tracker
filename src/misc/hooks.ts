@@ -1,16 +1,24 @@
 import { useState, PointerEvent } from "react";
 import { times } from "./util";
+import {
+  NavigateOptions,
+  useNavigate as __useNavigate__,
+  useRoutes as __useRoutes__,
+} from "react-router-dom";
+import { screenRoute } from "./types";
 
 const translate = <TElement extends HTMLElement>(e: TElement, d: number) =>
   e && (e.style.left = d + "px");
 
 export const useSwipe = <TElement extends HTMLElement>(
   childRefs: React.RefObject<TElement>[],
-  parentRef: React.RefObject<TElement>
+  parentRef: React.RefObject<TElement>,
+  callback?: (i: number) => void,
+  current?: number
 ) => {
   const [start, setStart] = useState<{ x: number; y: number; t: number }>();
   const [delta, setDelta] = useState<{ x: number; y: number }>();
-  const [curr, setCurr] = useState<number>(0);
+  const [curr, setCurr] = useState<number>(current || 0);
   const [isScrolling, setScrolling] = useState<boolean>();
 
   const startSwipe = ({ pageX: x, pageY: y, isPrimary }: PointerEvent) => {
@@ -66,6 +74,7 @@ export const useSwipe = <TElement extends HTMLElement>(
         [l, m, r].forEach((e, i) => e && translate(e, pos[i]));
         const newCurr =
           direction < 0 ? (r ? curr + 1 : curr) : l ? curr - 1 : curr;
+        callback && callback(newCurr);
         setCurr(newCurr);
       } else [l, m, r].forEach((e, i) => e && translate(e, [-w, 0, w][i]));
     }
@@ -90,3 +99,27 @@ export function useToggle(value?: number) {
     ? ([array, enable, toggle(false)] as const)
     : ([array[0], toggle(true), toggle(false)] as const);
 }
+
+type RouteObject<TPath> = Parameters<typeof __useRoutes__>[0][number] & {
+  path: TPath;
+};
+
+type RestParams<T> = T extends [any, ...infer U] ? U : never;
+
+type myUseRoutes = <TPath extends string>(
+  ...args: [
+    RouteObject<TPath>[],
+    ...RestParams<Parameters<typeof __useRoutes__>>
+  ]
+) => ReturnType<typeof __useRoutes__>;
+
+export const useRoutes = __useRoutes__ as myUseRoutes;
+
+interface NavigateFunction<T extends string> {
+  (delta: number): void;
+  (to: T, options?: NavigateOptions): void;
+}
+
+export const useNavigate = __useNavigate__ as <
+  T extends string = screenRoute
+>() => NavigateFunction<T>;

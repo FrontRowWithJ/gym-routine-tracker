@@ -19,8 +19,7 @@ export const Workout = ({
   workout,
   removeWorkout,
 }: WorkoutProps) => {
-  const { workoutName, numOfReps, numOfSets, unit, videoURL, unitAmount } =
-    workout;
+  const { workoutName, numOfReps, numOfSets, unit, videoURL, amount } = workout;
   const [style, setStyle] = useState<CSSProperties>(HIDE_STYLE);
   const [canPress, setPress] = useState<boolean>(true);
   const [canShowVideo, setShowVideo] = useState<boolean>(false);
@@ -37,7 +36,7 @@ export const Workout = ({
           callback={removeWorkout}
         />
       )}
-      <div className="workout-row">
+      <div className="workout-row noselect">
         {videoURL && (
           <div className="youtube-icon-container">
             <Youtube
@@ -74,11 +73,7 @@ export const Workout = ({
           <div>{workoutName}</div>
         </div>
         <div className="input-container">
-          <div
-            draggable={false}
-            onPointerDown={() => increase()}
-            className="increase-button"
-          >
+          <div onClick={increase} className="increase-button">
             +
           </div>
           <div
@@ -93,9 +88,9 @@ export const Workout = ({
               }, 2000);
             }}
           >
-            {`${unitAmount} ${unit}`}
+            {`${amount} ${unit}`}
           </div>
-          <div onPointerDown={() => decrease()} className="decrease-button">
+          <div onClick={decrease} className="decrease-button">
             -
           </div>
           <div

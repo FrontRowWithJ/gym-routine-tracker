@@ -21,3 +21,9 @@ export const muscleGroups = [
   "leg",
   "arm",
 ] as const;
+
+type routes = "login" | "register" ;
+
+export type screenRoute =
+  | `/${routes | "" | "*"}`
+  | `/musclegroup/${muscleGroup}`;

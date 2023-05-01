@@ -8,3 +8,7 @@ export * from "./BackButton";
 export * from "./Minus";
 export * from "./Plus";
 export * from "./Delete";
+export * from "./User";
+export * from "./Hide";
+export * from "./Show";
+export * from "./Logout";

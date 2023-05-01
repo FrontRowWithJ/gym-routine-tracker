@@ -4,25 +4,16 @@ import React, { CSSProperties, useRef, useState } from "react";
 import { Workout, capitalise, times } from "../../../misc";
 import { BackButton, Minus, Plus } from "../../../resources/SVG";
 
-const startSytle: CSSProperties = {
-  left: 0,
-  transform: "translateX(0%)",
-};
+const START_STYLE: CSSProperties = { left: 0, transform: "translateX(0%)" };
 
-const endStyle: CSSProperties = {
+const END_STYLE: CSSProperties = {
   left: "100%",
   transform: "translateX(calc(-100% - 6px))",
 };
 
-const enabled: CSSProperties = {
-  opacity: 1,
-  cursor: "",
-};
+const ENABLED: CSSProperties = { opacity: 1, cursor: "" };
 
-const disabled: CSSProperties = {
-  opacity: 0.5,
-  cursor: "not-allowed",
-};
+const DISABLED: CSSProperties = { opacity: 0.5, cursor: "not-allowed" };
 
 const ENABLED_ANIMATION: CSSProperties = {
   animationName: "translate",
@@ -72,7 +63,7 @@ export const AddWorkoutModal = ({
 
   return (
     <div className="add-modal-container">
-      <form action="" autoComplete="off">
+      <form className="add-modal-form" action="" autoComplete="off">
         <header>
           <div className="back-button" onClick={disable}>
             <BackButton fill="white" />
@@ -220,17 +211,17 @@ export const AddWorkoutModal = ({
           >
             <div
               className="switch"
-              style={hasVideo ? endStyle : startSytle}
+              style={hasVideo ? END_STYLE : START_STYLE}
             ></div>
           </div>
           <span className="checkbox-text">Has Video Tutorial?</span>
         </fieldset>
 
         <div style={getAnimationStyle()}>
-          <label htmlFor="video-url" style={hasVideo ? enabled : disabled}>
+          <label htmlFor="video-url" style={hasVideo ? ENABLED : DISABLED}>
             Youtube URL
           </label>
-          <div style={hasVideo ? enabled : disabled}>
+          <div style={hasVideo ? ENABLED : DISABLED}>
             <input
               ref={videoUrlRef}
               className="video-url"

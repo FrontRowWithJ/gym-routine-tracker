@@ -3,12 +3,25 @@
   --border-ofset: 2rem;
 }
 
-.app {
+.homepage {
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
   background: #36454f;
+}
+
+.logout-button {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+  z-index: 9999;
+  height: 40px;
+  aspect-ratio: 1 / 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 .save-container {
@@ -104,7 +117,12 @@
 }
 
 #right-border {
-  clip-path: polygon(50% 0, 100% 0, 100% 100%, calc(50% - var(--border-ofset)) 100%);
+  clip-path: polygon(
+    50% 0,
+    100% 0,
+    100% 100%,
+    calc(50% - var(--border-ofset)) 100%
+  );
   right: calc(-50% + var(--border-width));
   height: 100%;
   background: linear-gradient(

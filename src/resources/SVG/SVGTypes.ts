@@ -3,4 +3,5 @@ export interface SVGProp {
   stopColor?: string;
   fill?: string;
   className?: string;
+  onClick?: () => void;
 }
