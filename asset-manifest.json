@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/gym-routine-tracker/static/css/main.3a688cd5.css",
-    "main.js": "/gym-routine-tracker/static/js/main.506249cd.js",
+    "main.css": "/gym-routine-tracker/static/css/main.2493e575.css",
+    "main.js": "/gym-routine-tracker/static/js/main.bc12bcd8.js",
     "static/media/Circular_Std_Book.ttf": "/gym-routine-tracker/static/media/Circular_Std_Book.ce1731670f4779d9c951.ttf",
     "service-worker.js": "/gym-routine-tracker/service-worker.js",
     "index.html": "/gym-routine-tracker/index.html",
-    "main.3a688cd5.css.map": "/gym-routine-tracker/static/css/main.3a688cd5.css.map",
-    "main.506249cd.js.map": "/gym-routine-tracker/static/js/main.506249cd.js.map"
+    "main.2493e575.css.map": "/gym-routine-tracker/static/css/main.2493e575.css.map",
+    "main.bc12bcd8.js.map": "/gym-routine-tracker/static/js/main.bc12bcd8.js.map"
   },
   "entrypoints": [
-    "static/css/main.3a688cd5.css",
-    "static/js/main.506249cd.js"
+    "static/css/main.2493e575.css",
+    "static/js/main.bc12bcd8.js"
   ]
 }
