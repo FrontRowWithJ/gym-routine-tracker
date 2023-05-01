@@ -25,12 +25,12 @@ export const Home = () => {
   const navigate = useNavigate();
   const path = window.location.pathname;
   const str = path!.substring(path!.lastIndexOf("/") + 1);
-  const index = str === "" ? 0 : muscleGroups.indexOf(str as muscleGroup);
+  const index = muscleGroups.indexOf(str as muscleGroup);
   const { curr, startSwipe, moveSwipe, endSwipe } = useSwipe(
     cardRefs,
     homepageRef,
-    (i) => navigate(`/musclegroup/${muscleGroups[i]}`),
-    index
+    (i) => navigate(`/gym-routine-tracker/musclegroup/${muscleGroups[i]}`),
+    index === -1 ? 0 : index
   );
 
   const [chestRoutine, setChestRoutine] = useState<Routine>([]);
@@ -67,7 +67,7 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn()) return navigate("/login");
+    if (!isLoggedIn()) return navigate("/gym-routine-tracker/login");
     fetch(`${BASE_URL}/get_gym_routine`, {
       method: "GET",
       credentials: "include",
@@ -100,7 +100,7 @@ export const Home = () => {
           fetch(`${BASE_URL}/logout`, {
             mode: "cors",
             credentials: "include",
-          }).then(() => navigate("/login"));
+          }).then(() => navigate("/gym-routine-tracker/login"));
         }}
       >
         <Logout fill="#ffffff80" />

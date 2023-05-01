@@ -46,7 +46,10 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => void (isLoggedIn() && navigate("/")), [navigate]);
+  useEffect(
+    () => void (isLoggedIn() && navigate("/gym-routine-tracker/")),
+    [navigate]
+  );
   return (
     <main className="register-page" style={{ backgroundColor }}>
       <Label pos={0} text="Sign Up" />
@@ -149,7 +152,7 @@ export const Register = () => {
             }).then((res) => {
               if (res.ok) {
                 setLoggedIn(true);
-                navigate("/");
+                navigate("/gym-routine-tracker/");
               } else {
                 //todo handle error
               }
@@ -161,7 +164,7 @@ export const Register = () => {
       </form>
       <div>
         <span>Already have an account?&nbsp;</span>
-        <Link<screenRoute> to="/login">Login</Link>
+        <Link<screenRoute> to="/gym-routine-tracker/login">Login</Link>
       </div>
       <ul>
         <li style={isUsernameUnique ? VALID : INVALID}>Username is Unique</li>

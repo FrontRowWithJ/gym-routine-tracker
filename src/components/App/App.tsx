@@ -16,13 +16,13 @@ const App = () => {
 const Router = () => {
   const element = <Home />;
   const routes = muscleGroups.map((path) => ({
-    path: `/musclegroup/${path}` as const,
+    path: `/gym-routine-tracker/musclegroup/${path}` as const,
     element,
   }));
   const otherRoutes = [
-    { path: "/", element: <Home /> },
-    { path: "/login", element: <Login /> },
-    { path: "/register", element: <Register /> },
+    { path: "/gym-routine-tracker/", element: <Home /> },
+    { path: "/gym-routine-tracker/login", element: <Login /> },
+    { path: "/gym-routine-tracker/register", element: <Register /> },
     { path: "/*", element: <div>404</div> },
   ] as const;
   return useRoutes<screenRoute>([...routes, ...otherRoutes]);
