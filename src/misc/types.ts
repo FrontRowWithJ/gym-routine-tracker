@@ -25,5 +25,5 @@ export const muscleGroups = [
 type route = "login" | "register" | "";
 
 export type screenRoute =
-  | `/gym-routine-tracker/${route | `musclegroup/${muscleGroup}`}`
+  | `/${route | `musclegroup/${muscleGroup}`}`
   | "/*";

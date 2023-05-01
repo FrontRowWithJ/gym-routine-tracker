@@ -21,7 +21,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   useEffect(
-    () => void (isLoggedIn() && navigate("/gym-routine-tracker/")),
+    () => void (isLoggedIn() && navigate("/")),
     [navigate]
   );
 
@@ -70,7 +70,7 @@ export const Login = () => {
             }).then((res) => {
               if (res.ok) {
                 setLoggedIn(true);
-                navigate("/gym-routine-tracker/");
+                navigate("/");
               } else {
                 //todo provide better error message
                 alert("Incorrect username or password");
@@ -83,7 +83,7 @@ export const Login = () => {
       </form>
       <div>
         <span>Don't have an account?&nbsp;</span>
-        <Link<screenRoute> to="/gym-routine-tracker/register">Sign Up</Link>
+        <Link<screenRoute> to="/register">Sign Up</Link>
       </div>
     </main>
   );

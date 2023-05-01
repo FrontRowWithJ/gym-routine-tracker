@@ -29,7 +29,7 @@ export const Home = () => {
   const { curr, startSwipe, moveSwipe, endSwipe } = useSwipe(
     cardRefs,
     homepageRef,
-    (i) => navigate(`/gym-routine-tracker/musclegroup/${muscleGroups[i]}`),
+    (i) => navigate(`/musclegroup/${muscleGroups[i]}`),
     index === -1 ? 0 : index
   );
 
@@ -67,7 +67,7 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    if (!isLoggedIn()) return navigate("/gym-routine-tracker/login");
+    if (!isLoggedIn()) return navigate("/login");
     fetch(`${BASE_URL}/get_gym_routine`, {
       method: "GET",
       credentials: "include",
@@ -100,7 +100,7 @@ export const Home = () => {
           fetch(`${BASE_URL}/logout`, {
             mode: "cors",
             credentials: "include",
-          }).then(() => navigate("/gym-routine-tracker/login"));
+          }).then(() => navigate("/login"));
         }}
       >
         <Logout fill="#ffffff80" />
