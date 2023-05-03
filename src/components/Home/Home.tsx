@@ -28,8 +28,8 @@ export const Home = () => {
   const i = muscleGroups.indexOf(str as muscleGroup);
   const index = i === -1 ? 0 : i;
   const { curr, startSwipe, moveSwipe, endSwipe } = useSwipe(
-    cardRefs,
     homepageRef,
+    cardRefs,
     (i) => navigate(`/musclegroup/${muscleGroups[i]}`),
     index
   );
