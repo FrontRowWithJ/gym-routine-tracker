@@ -7,12 +7,13 @@ import {
 } from "react-router-dom";
 import { screenRoute } from "./types";
 
-const translate = <TElement extends HTMLElement>(e: TElement, d: number) =>
+const translate = <TElement extends HTMLElement>(e: TElement, d: number) => {
   e && (e.style.left = d + "px");
+};
 
 export const useSwipe = <TElement extends HTMLElement>(
-  childRefs: React.RefObject<TElement>[],
   parentRef: React.RefObject<TElement>,
+  childRefs: React.RefObject<TElement>[],
   callback?: (i: number) => void,
   current?: number
 ) => {
