@@ -11,6 +11,10 @@
   background: #36454f;
 }
 
+.homepage * {
+  touch-action: pan-y;
+}
+
 .logout-button {
   position: fixed;
   right: 10px;
