@@ -1,4 +1,5 @@
 [build]
+directory = "/"
 
 [functions]
 # Directory with serverless functions, including background
