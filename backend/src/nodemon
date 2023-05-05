@@ -1,0 +1,3 @@
+#! /bin/zsh
+
+MONGODB_URI="mongodb+srv://FrontRowWithJ:IThinkImHipster123@gym-cluster.tkt3mwj.mongodb.net/?retryWrites=true&w=majority" nodemon $1

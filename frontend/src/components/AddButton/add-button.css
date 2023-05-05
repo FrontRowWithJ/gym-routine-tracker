@@ -1,0 +1,24 @@
+.add-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4rem;
+  cursor: pointer;
+  position: relative;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: 2rem;
+  background: linear-gradient(180deg, #313e47, #3a4a55);
+  width: 18rem;
+}
+
+.add-button svg {
+  width: unset;
+  margin-right: 1rem;
+}
+
+.add-button span {
+  text-align: center;
+  flex-grow: 1;
+}
