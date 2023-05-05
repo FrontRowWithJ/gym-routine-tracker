@@ -1,5 +1,6 @@
 [build]
 directory = "/"
+command = "npm install && npm run build --prefix ./frontend"
 
 [functions]
 # Directory with serverless functions, including background
