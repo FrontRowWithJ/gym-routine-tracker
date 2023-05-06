@@ -1,5 +1,6 @@
 import { AlertModalProps } from "./types";
 import "./alert-modal.css";
+import React from "react";
 
 export const AlertModal = ({ message, close, callback }: AlertModalProps) => {
   const closeWrapper = () => {

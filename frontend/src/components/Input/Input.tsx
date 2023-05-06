@@ -2,6 +2,7 @@ import { InputProps } from "./types";
 import "./input.css";
 import { useEffect, useRef, useState, CSSProperties } from "react";
 import { Eyeball } from "./Eyeball";
+import React from "react";
 
 type foo = { [key in keyof CSSProperties]: string };
 

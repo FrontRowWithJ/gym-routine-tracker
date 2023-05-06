@@ -1,3 +1,4 @@
+import React from "react";
 import { Show, Hide } from "../../../resources/SVG";
 import { EyeballProps } from "./types";
 

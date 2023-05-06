@@ -1,10 +1,10 @@
 import "./login.css";
 import { Label } from "../Label";
 import { Input } from "../Input";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { User } from "../../resources/SVG";
 import {
-  BASE_URL,
+  FUNCTIONS_PATH,
   isLoggedIn,
   screenRoute,
   setLoggedIn,
@@ -20,10 +20,7 @@ export const Login = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
-  useEffect(
-    () => void (isLoggedIn() && navigate("/")),
-    [navigate]
-  );
+  useEffect(() => void (isLoggedIn() && navigate("/")), [navigate]);
 
   return (
     <main className="login-page" style={{ backgroundColor }}>
@@ -62,7 +59,7 @@ export const Login = () => {
               return usernameInput.reportValidity();
             if (!passwordInput.checkValidity())
               return passwordInput.reportValidity();
-            fetch(`${BASE_URL}/login`, {
+            fetch(`${FUNCTIONS_PATH}/login`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ username, password }),

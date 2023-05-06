@@ -4,14 +4,13 @@ import { Login } from "../Login";
 import { BrowserRouter } from "react-router-dom";
 import { muscleGroups, screenRoute, useRoutes } from "../../misc";
 import { Home } from "../Home";
+import React from "react";
 
-const App = () => {
-  return (
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
-  );
-};
+const App = () => (
+  <BrowserRouter>
+    <Router />
+  </BrowserRouter>
+);
 
 const Router = () => {
   const element = <Home />;

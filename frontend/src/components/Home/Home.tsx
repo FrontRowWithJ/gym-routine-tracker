@@ -3,7 +3,7 @@ import { Card } from "../Card";
 import {
   times,
   getLeft,
-  BASE_URL,
+  FUNCTIONS_PATH,
   useSwipe,
   Routine,
   muscleGroups,
@@ -68,7 +68,7 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    fetch(`${BASE_URL}/get_gym_routine`, {
+    fetch(`${FUNCTIONS_PATH}/get_gym_routine`, {
       method: "GET",
       credentials: "include",
     })
@@ -101,7 +101,7 @@ export const Home = () => {
         className="logout-button"
         onClick={() => {
           setLoggedIn(false);
-          fetch(`${BASE_URL}/logout`, {
+          fetch(`${FUNCTIONS_PATH}/logout`, {
             mode: "cors",
             credentials: "include",
           }).then(() => navigate("/login"));
@@ -131,7 +131,7 @@ export const Home = () => {
             setPress(false);
             setStyle("calc(100% - 2px)");
             if (!routines) return;
-            fetch(`${BASE_URL}/update_gym_routine`, {
+            fetch(`${FUNCTIONS_PATH}/update_gym_routine`, {
               method: "POST",
               mode: "cors",
               credentials: "include",

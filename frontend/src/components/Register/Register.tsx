@@ -1,10 +1,10 @@
 import "./register.css";
 import { Input } from "../Input";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { User } from "../../resources/SVG/User";
 import { Label } from "../Label";
 import {
-  BASE_URL,
+  FUNCTIONS_PATH,
   isLoggedIn,
   screenRoute,
   setLoggedIn,
@@ -46,10 +46,7 @@ export const Register = () => {
 
   const navigate = useNavigate();
 
-  useEffect(
-    () => void (isLoggedIn() && navigate("/")),
-    [navigate]
-  );
+  useEffect(() => void (isLoggedIn() && navigate("/")), [navigate]);
   return (
     <main className="register-page" style={{ backgroundColor }}>
       <Label pos={0} text="Sign Up" />
@@ -60,7 +57,7 @@ export const Register = () => {
           placeholder="Username"
           value={username}
           onChange={({ target: { value } }) => {
-            fetch(`${BASE_URL}/is_username_unique/?username=${value}`, {
+            fetch(`${FUNCTIONS_PATH}/is_username_unique/?username=${value}`, {
               method: "GET",
               credentials: "include",
             }).then(async (res) => setIsUsernameUnique(await res.json()));
@@ -144,7 +141,7 @@ export const Register = () => {
             setUsernameErrorMessage(undefined);
             setPasswordErrorMessage(undefined);
             setConfirmPasswordErrorMessage(undefined);
-            fetch(`${BASE_URL}/register`, {
+            fetch(`${FUNCTIONS_PATH}/register`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ username, password, confirmPassword }),

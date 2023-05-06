@@ -31,3 +31,5 @@ src/nodemon
 output
 *.sh
 *test*.ts
+
+.vscode/*

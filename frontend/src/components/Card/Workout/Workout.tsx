@@ -1,4 +1,4 @@
-import { CSSProperties, useRef, useState } from "react";
+import React, { CSSProperties, useRef, useState } from "react";
 import "./workout.css";
 import { Youtube } from "../../../resources/SVG/Youtube";
 import { WorkoutProps } from "./types";
@@ -24,7 +24,7 @@ export const Workout = ({
   const [canPress, setPress] = useState<boolean>(true);
   const [canShowVideo, setShowVideo] = useState<boolean>(false);
   const [canShowModal, setShowModal] = useState<boolean>(false);
-  const iidRef = useRef<NodeJS.Timeout>();
+  const iidRef = useRef<number>();
   if (!canShow) clearInterval(iidRef.current);
 
   return (
@@ -43,7 +43,7 @@ export const Workout = ({
               onClick={() => {
                 if (!canShow) {
                   enable();
-                  iidRef.current = setTimeout(() => setShowVideo(true), 1000);
+                  iidRef.current = +setTimeout(() => setShowVideo(true), 1000);
                 } else {
                   clearInterval(iidRef.current);
                   setShowVideo(false);
