@@ -1,7 +1,6 @@
 import { Workout } from "../Workout";
 import { setWorkoutValues } from "../../../misc";
 import { RoutineProps } from "./types";
-import React from "react";
 
 export const Routine = ({
   routine,

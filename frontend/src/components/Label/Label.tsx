@@ -1,4 +1,3 @@
-import React from "react";
 import "./label.css";
 import { LabelProps } from "./types";
 
