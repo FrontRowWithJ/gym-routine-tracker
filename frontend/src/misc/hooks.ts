@@ -93,10 +93,10 @@ export function useToggle(
 ): [boolean[], (i: number) => void, () => void];
 
 export function useToggle(value?: number) {
-  const [array, setArray] = useState<boolean[]>(times(value ?? 1, false));
+  const [array, setArray] = useState<boolean[]>([false]);
   const toggle = (val: boolean) => () => setArray(times(value ?? 1, val));
   const enable = (i: number) => setArray(array.map((b, j) => i === j || b));
-  return value
+  return typeof value === "number"
     ? ([array, enable, toggle(false)] as const)
     : ([array[0], toggle(true), toggle(false)] as const);
 }
